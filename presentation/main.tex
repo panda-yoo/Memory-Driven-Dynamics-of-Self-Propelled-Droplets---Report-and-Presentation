@@ -1,0 +1,147 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+% =========================
+% Theme
+% =========================
+\usetheme{Madrid}
+
+% =========================
+% Red Color Theme
+% =========================
+\definecolor{darkred}{RGB}{120,0,0}
+\definecolor{lightred}{RGB}{180,30,30}
+\definecolor{softred}{RGB}{245,235,235}
+
+\setbeamercolor{title}{fg=white,bg=darkred}
+\setbeamercolor{frametitle}{fg=white,bg=darkred}
+
+\setbeamercolor{structure}{fg=darkred}
+
+\setbeamercolor{section in toc}{fg=darkred}
+\setbeamercolor{subsection in toc}{fg=lightred}
+
+\setbeamercolor{block title}{bg=darkred,fg=white}
+\setbeamercolor{block body}{bg=softred,fg=black}
+
+\setbeamercolor{item}{fg=darkred}
+
+\setbeamercolor{palette primary}{bg=darkred,fg=white}
+\setbeamercolor{palette secondary}{bg=lightred,fg=white}
+\setbeamercolor{palette tertiary}{bg=darkred,fg=white}
+\setbeamercolor{palette quaternary}{bg=black,fg=white}
+
+\setbeamercolor{footline}{bg=darkred,fg=white}
+
+% =========================
+% Remove navigation symbols
+% =========================
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{caption}[numbered]
+
+% =========================
+% Packages
+% =========================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta}
+
+\graphicspath{{assets/images/}{assets/logos/}}
+
+% =========================
+% Custom Commands
+% =========================
+% Command to add references/sources at the bottom of a slide without footnote markers
+\newcommand{\source}[1]{\let\thefootnote\relax\footnotetext{\tiny \textcolor{gray}{Reference: #1}}}
+
+% BibLaTeX Setup
+\usepackage[backend=biber,style=authoryear,sorting=nyt,maxcitenames=2]{biblatex}
+\addbibresource{bibliography/references.bib}
+
+% Remove bibliography icon
+\setbeamertemplate{bibliography item}{}
+
+% =========================
+% Custom Citation Command
+% =========================
+\usepackage[absolute,overlay]{textpos}
+\DeclareCiteCommand{\myjournalortitle}
+  {\usebibmacro{prenote}}
+  {\iffieldundef{journaltitle}
+     {\printfield{title}}
+     {\printfield{journaltitle}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+\newcommand{\rightcite}[1]{%
+  \begin{textblock*}{0.7\paperwidth}(0.29\paperwidth,0.92\paperheight)
+  \raggedleft
+  \tiny \textcolor{gray}{\citename{#1}{author}, \textit{\myjournalortitle{#1}} (\citeyear{#1})}
+  \end{textblock*}%
+}
+
+% =========================
+% Title Info
+% =========================
+\title[Active Droplet Dynamics]{Memory-Driven Dynamics of Self-Propelled Droplets}
+
+\subtitle{
+Experimental Analysis and PDE--SDE Modelling
+}
+
+\author{Pranav Deepak Shinde}
+
+\institute{
+Department of Physics\\
+National Institute of Technology Karnataka, Surathkal
+}
+
+\date{JUNE 2026}
+
+% =========================
+% Footer
+% =========================
+\setbeamertemplate{footline}
+{
+    \leavevmode
+    \hbox{
+        \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.5ex,dp=1ex,center]{author in head/foot}
+            \insertshortauthor
+        \end{beamercolorbox}
+
+        \begin{beamercolorbox}[wd=.34\paperwidth,ht=2.5ex,dp=1ex,center]{title in head/foot}
+            \insertshorttitle
+        \end{beamercolorbox}
+
+        \begin{beamercolorbox}[wd=.33\paperwidth,ht=2.5ex,dp=1ex,right]{date in head/foot}
+            \insertframenumber{} / \inserttotalframenumber
+            \hspace{2ex}
+        \end{beamercolorbox}
+    }
+}
+
+% =========================
+% Begin Document
+% =========================
+\begin{document}
+
+\input{sections/00-title}
+\input{sections/01-outline}
+\input{sections/02_introduction}
+\input{sections/03_objectives}
+\input{sections/04-methodology}
+\input{sections/05_model}
+\input{sections/06_numerics}
+\input{sections/07_results}
+\input{sections/08_conclusion}
+
+\begin{frame}[allowframebreaks]{References}
+	\printbibliography
+\end{frame}
+
+\end{document}

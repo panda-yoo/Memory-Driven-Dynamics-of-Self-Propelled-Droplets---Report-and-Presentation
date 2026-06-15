@@ -1,0 +1,63 @@
+% ================================================================
+% Chapter 5 — Conclusion
+% ================================================================
+
+\chapter{Conclusion}
+\label{chap:conclusion}
+
+\section{Summary of Work}
+\label{sec:summary}
+
+This thesis studied the motion of active Belousov--Zhabotinsky (BZ) droplets and showed that their movement is not random in a simple way. These droplets move because of chemical reactions inside them, and the chemicals they produce also affect how they move. In this way, each droplet leaves behind a chemical trail that influences its future motion. This makes the system a good example of memory-driven motion, where the past affects the present.
+
+A main goal of this work was to understand whether the droplet motion could be explained using a memory effect. In many simple active particle models, the direction of motion changes without any dependence on the past. But the results in this thesis show that BZ droplets do not behave like that. Instead, they keep some memory of their own trail, and this changes how they move over time.
+
+The first part of the work focused on experiments. Droplets were recorded under a microscope, and their motion was tracked from video frames. To do this reliably, a YOLOv8-based tracking method was used. This helped identify each droplet and follow it across frames. The raw trajectories were then cleaned to remove bad detections, short tracks, and noisy data. This step was important because all later analysis depended on accurate trajectories.
+
+After the trajectories were prepared, several measures were used to study the droplet motion. The mean-squared displacement (MSD) was used to see how far the droplets moved over time. The MSD showed superdiffusive behaviour, which means the droplets spread faster than normal Brownian motion. In simple terms, the droplets moved more persistently than ordinary random walkers.
+
+The local MSD exponent was also studied to see how the motion changed with time. This exponent started above 1 at short times and gradually moved toward 1 at longer times. This showed that the droplets first moved in a persistent way, but later their motion became more like ordinary diffusion. The smooth change also suggested that the driving force weakens gradually rather than switching on and off suddenly.
+
+The velocity autocorrelation function (VACF) was used to check whether the droplets remember their past velocity. The VACF stayed positive for a short time and then decayed exponentially. This means that if a droplet was moving in one direction, it was likely to keep moving in a similar direction for some time before forgetting that motion. This is a clear sign of memory in the system.
+
+The orientation correlation function gave similar information, but for the direction of the droplet heading. It also decayed exponentially, with a persistence time similar to that of the velocity correlation. This supports the idea that the droplet’s motion and orientation are both affected by the same chemical trail.
+
+To explain these results, a theoretical model was developed. The model combined a reaction--diffusion equation for the chemical field with a stochastic equation for the droplet motion\cite{droplet2025}. In this model, the droplet releases chemicals as it moves, and the chemical field pushes back on the droplet through the gradient of concentration. The chemical field spreads out and decays with time, so it acts like a memory of where the droplet has been.
+
+The model was solved numerically using a finite element method for the chemical field and the Euler--Maruyama method for the droplet motion. The simulated trajectories were then analysed in the same way as the experimental data. The simulations reproduced the main experimental features well. They showed superdiffusive MSD, a smooth decrease in the local exponent, and exponentially decaying velocity and orientation correlations. This agreement between experiment and simulation strongly supports the idea that the droplet's motion is controlled by its own chemical trail.
+
+Overall, this thesis shows that active BZ droplets move in a memory-driven way. Their motion cannot be fully described by a simple Markovian model that ignores the past. Instead, the droplet carries and responds to a chemical record of its own path. The PDE--SDE model used here gives a simple and useful way to describe this process and matches the experimental results well.
+
+\section{Limitations}
+\label{sec:limitations}
+
+This work has some limitations that should be kept in mind.
+
+On the experimental side, the camera view was limited. Some droplets moved out of the field of view before enough data could be collected, so not all trajectories were usable. Only the cleaner and longer tracks were kept for analysis. Because of this, the number of trajectories used in some calculations was not very large. This affects how precise the average results are, especially at long time delays where fewer data points are available.
+
+The tracking method also introduces small errors in position. Even though YOLOv8 worked well, it is still not perfect. Small position errors can affect the calculated velocity and correlation functions, especially at short times.
+
+On the modelling side, the theoretical description is simplified. The real BZ reaction involves many chemical steps, but the model used here represents it with an effective chemical field. This is useful for understanding the main behaviour, but it does not include all chemical details. The model also ignores fluid flow around the droplet, interactions with boundaries, and possible effects from the droplet size. These omitted effects may help explain small differences between the simulation and experiment.
+
+There is also a statistical limit because the number of trajectories is not very large. A small data set can be sensitive to outliers and random variation. So the fitted values should be seen as reasonable estimates, not exact universal constants.
+
+\section{Future Work}
+\label{sec:future}
+
+There are several useful directions for future work.
+
+\paragraph{Experimental extensions.}
+A larger number of trajectories would improve the statistics and make the results more reliable. Longer recordings would help study the motion over larger time scales. A larger field of view would also reduce the number of trajectories lost at the edges of the image. It would also be useful to vary experimental conditions such as droplet size, chemical concentration, viscosity, and temperature to see how they affect the motion.
+
+\paragraph{Theoretical developments.}
+The model could be improved by deriving a more explicit memory equation for the droplet motion. Another useful direction would be to estimate the memory kernel directly from trajectory data. This would give a more direct link between experiment and theory. It would also be useful to study higher-order statistics, such as displacement distributions and non-Gaussian measures, to get a fuller picture of the motion.
+
+\paragraph{Numerical and computational improvements.}
+The chemical model could be made more realistic by using a more detailed description of the BZ reaction. The model could also include fluid flow around the droplet. Another important extension would be to study multiple droplets at the same time, since interactions between droplets may lead to collective behaviour. Better parameter fitting methods, such as Bayesian inference, could also improve the reliability of the model parameters.
+
+\section{Closing Remark}
+\label{sec:closing}
+
+The main result of this thesis is that active BZ droplets show clear memory-driven motion. Their movement is influenced by a chemical trail left behind by the droplet itself. This explains the superdiffusive motion, the changing MSD exponent, and the exponential decay of velocity and orientation correlations.
+
+The experimental tracking, statistical analysis, and numerical simulation all point to the same conclusion. The droplet does not move as a simple memoryless particle. Instead, it moves in a way that depends on its own past. This makes BZ droplets a clear example of non-Markovian active matter and provides a useful framework for studying similar systems in the future.

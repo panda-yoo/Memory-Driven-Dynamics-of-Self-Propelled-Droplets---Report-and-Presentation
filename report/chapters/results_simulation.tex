@@ -1,0 +1,236 @@
+\section{Simulation Results}
+
+\subsection{Representative Simulated Droplet}
+
+The simulations were performed using the nominal model parameters listed below. The runs reported here used a small ensemble of six simulated droplets and a fixed random seed to produce reproducible trajectories; the following paragraphs explain the physical meaning of each parameter used in the simulation outputs discussed below.
+
+\begin{table}[htbp]
+\centering
+\caption{Main simulation parameters used in the PDE-SDE model adapted from \cite{droplet2025}.}
+\label{tab:simulation_parameters}
+\begin{tabular}{lll}
+\hline
+Parameter & Value & Description \\
+\hline
+$N_{\mathrm{drop}}$ & 6 & Number of droplets simulated in a single realization. \\
+
+\texttt{seed} & 4 & Random seed used to ensure reproducible stochastic trajectories. \\
+
+$N_x$ & 200 & Number of grid points in the horizontal direction. \\
+
+$N_y$ & 200 & Number of grid points in the vertical direction. \\
+
+\texttt{dt\_val} & 0.002 & Numerical time step used for updating the simulation. \\
+
+\texttt{frame\_every} & 1 & Number of simulation steps between saved trajectory frames. \\
+
+\texttt{D\_val} & $1\times10^{-5}$ & Diffusion coefficient of the chemical concentration field. \\
+
+$T$ & 2.0 & Total simulation time. \\
+
+$R_0$ & 0.040 & Initial droplet radius. \\
+
+\texttt{Rshrink} & $2.5\times10^{-4}$ & Rate controlling gradual droplet shrinkage. \\
+
+\texttt{Rmin} & 0.008 & Minimum allowed droplet radius. \\
+
+$\delta$ & 0.060 & Interaction length scale governing the influence of concentration \\
+& & gradients. \\
+
+$\eta$ & 1.0 & Effective damping coefficient controlling droplet response to forces. \\
+\hline
+\end{tabular}
+\end{table}
+The simulations were performed using the coupled PDE--SDE model\cite{droplet2025} described in Chapter~3. The main parameters used throughout the simulations are summarized in Table~\ref{tab:simulation_parameters}. These parameters control the numerical resolution, droplet properties, diffusion of the chemical field, and the strength of the droplet--environment interaction.
+
+\subsubsection{Trajectory}
+Figure~\ref{fig:sim_rep_traj} shows the trajectory of a representative simulated droplet extracted from the simulation output.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{output_sim_single_Trajectory.png}
+\caption{Trajectory of a representative simulated droplet.}
+\label{fig:sim_rep_traj}
+\end{figure}
+
+The simulated droplet explores a large portion of the simulated domain and shows extended, curved excursions. This morphology indicates persistent self-propelled motion in the model trajectory\cite{droplet2025}.
+
+%=========================================================
+\subsubsection{Mean-Squared Displacement}
+%=========================================================
+Figure~\ref{fig:sim_rep_msd} shows the mean-squared displacement (MSD) for the same simulated droplet plotted on logarithmic axes.
+
+\begin{figure}[H]
+\centering
+% \includegraphics[width=0.75\textwidth]{output_sim_droplet_6_tracking_loglog_msd.png}
+\includegraphics[width=0.75\textwidth]{output_sim_droplet_6_tracking_all_droplets_msd_comparison.png}
+
+\caption{Mean-squared displacement of the representative simulated droplet.}
+\label{fig:sim_rep_msd}
+\end{figure}
+
+The MSD follows an approximate power-law over the fitted lag-time interval. The reported ensemble fit (see below) gives a transport exponent greater than unity, indicating \cite{balakrishnan2021} for the simulated trajectories.
+
+%=========================================================
+\subsubsection{Local MSD Exponent}
+%=========================================================
+Figure~\ref{fig:sim_rep_alpha} shows the local MSD exponent as a function of lag time for the representative simulated droplet.
+
+\begin{figure}[H]
+\centering
+% \includegraphics[width=0.75\textwidth]{output_sim_droplet_6_tracking_alpha_vs_tau.png}
+\includegraphics[width=0.75\textwidth]{output_sim_droplet_6_tracking_all_droplets_local_alpha_comparison.png}
+
+\caption{Local MSD exponent of the representative simulated droplet.}
+\label{fig:sim_rep_alpha}
+\end{figure}
+
+At short lag times the local exponent is closer to the ballistic limit\cite{balakrishnan2021} and it decreases with increasing lag time, indicating a gradual loss of directional memory as the particle explores longer timescales.
+
+%=========================================================
+\subsubsection{Velocity Autocorrelation Function}
+%=========================================================
+Figure~\ref{fig:sim_rep_vacf} shows the velocity autocorrelation function (VACF) for the representative simulated droplet.
+
+\begin{figure}[H]
+\centering
+% \includegraphics[width=0.75\textwidth]{output_sim_droplet_6_tracking_vacf.png}
+\includegraphics[width=0.75\textwidth]{output_sim_droplet_6_tracking_all_droplets_vacf_comparison.png}
+
+\caption{Velocity autocorrelation function of the representative simulated droplet.}
+\label{fig:sim_rep_vacf}
+\end{figure}
+
+The VACF decays with lag time and is well represented by an exponential-like falloff. The decay indicates a finite velocity persistence time\cite{balakrishnan2021} in the simulated dynamics.
+
+%=========================================================
+\subsubsection{Orientation Correlation Function}
+%=========================================================
+Figure~\ref{fig:sim_rep_orientation} shows the orientation correlation function for the representative simulated droplet.
+
+\begin{figure}[H]
+\centering
+% \includegraphics[width=0.75\textwidth]{output_sim_droplet_6_tracking_orientation_corr.png}
+\includegraphics[width=0.75\textwidth]{output_sim_droplet_6_tracking_all_droplets_orientation_comparison.png}
+
+\caption{Orientation correlation function of the representative simulated droplet.}
+\label{fig:sim_rep_orientation}
+\end{figure}
+
+The orientation correlation decreases rapidly with lag time, indicating that the simulated droplet reorients on a short timescale compared with its translational persistence.
+
+\subsection{Ensemble Simulation Dynamics}
+
+%=========================================================
+\subsubsection{Trajectory Statistics}
+%=========================================================
+The simulation produced $N=6$ retained tracks (ensemble average $N=6$). Figure~\ref{fig:sim_ensemble_traj} shows the ensemble trajectories from the simulation output.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{output_sim_droplet_6_tracking_all_droplets_trajectory_comparison.png}
+\caption{Ensemble trajectories for all simulated droplets (six retained tracks).}
+\label{fig:sim_ensemble_traj}
+\end{figure}
+
+The ensemble trajectories span the simulation domain and show variation in curvature and excursion length between tracks, while collectively indicating persistent directed motion.
+
+%=========================================================
+\subsubsection{Mean-Squared Displacement}
+%=========================================================
+Figure~\ref{fig:sim_ensemble_msd} shows the ensemble MSD comparison computed from all retained simulated tracks.
+
+\begin{figure}[H]
+\centering
+% \includegraphics[width=0.75\textwidth]{output_sim_droplet_6_tracking_all_droplets_msd_comparison.png}
+\includegraphics[width=0.75\textwidth]{output_sim_droplet_6_tracking_loglog_msd.png}
+\caption{Ensemble mean-squared displacement for the simulated droplets.}
+\label{fig:sim_ensemble_msd}
+\end{figure}
+
+The ensemble MSD follows an approximate power-law. The reported ensemble fit gives
+
+\[\alpha = 1.527181 \pm 0.008809,\quad R^2 = 0.996121.\]
+
+This exponent ($\alpha>1$) indicates superdiffusive transport in the simulated trajectories, i.e. motion that is more persistent than ordinary diffusion.
+
+%=========================================================
+\subsubsection{Local MSD Exponent}
+%=========================================================
+Figure~\ref{fig:sim_ensemble_alpha} shows the local MSD exponent computed across the simulated ensemble.
+
+\begin{figure}[H]
+\centering
+% \includegraphics[width=0.75\textwidth]{output_sim_droplet_6_tracking_all_droplets_local_alpha_comparison.png}
+\includegraphics[width=0.75\textwidth]{output_sim_droplet_6_tracking_alpha_vs_tau.png}
+
+\caption{Lag-dependent local MSD exponent for the simulated ensemble.}
+\label{fig:sim_ensemble_alpha}
+\end{figure}
+
+The local exponent decreases with lag time from values nearer the ballistic limit at short lags toward smaller values at long lags, showing a gradual crossover from strongly persistent motion to weaker persistence.
+
+%=========================================================
+\subsubsection{Velocity Autocorrelation Function}
+%=========================================================
+Figure~\ref{fig:sim_ensemble_vacf} shows the ensemble-averaged VACF for the simulated tracks.
+
+\begin{figure}[H]
+\centering
+% \includegraphics[width=0.75\textwidth]{output_sim_droplet_6_tracking_all_droplets_vacf_comparison.png}
+\includegraphics[width=0.75\textwidth]{output_sim_droplet_6_tracking_vacf.png}
+
+\caption{Ensemble velocity autocorrelation functions for the simulated droplets.}
+\label{fig:sim_ensemble_vacf}
+\end{figure}
+
+An exponential-like decay was fitted to the VACF and yields a translational persistence time
+
+\[\tau_p = 0.031034 \pm 0.003637~\mathrm{s}.\]
+
+The finite persistence time shows that the simulated particle velocities remain correlated over a short but measurable timescale.
+
+%=========================================================
+\subsubsection{Orientation Correlation}
+%=========================================================
+Figure~\ref{fig:sim_ensemble_orientation} shows the ensemble orientation correlation for the simulated tracks.
+
+\begin{figure}[H]
+\centering
+% \includegraphics[width=0.75\textwidth]{output_sim_droplet_6_tracking_all_droplets_orientation_comparison.png}
+\includegraphics[width=0.75\textwidth]{output_sim_droplet_6_tracking_orientation_corr.png}
+
+\caption{Ensemble orientation correlation functions for the simulated droplets.}
+\label{fig:sim_ensemble_orientation}
+\end{figure}
+
+An exponential fit to the orientation correlation returns the rotational persistence time
+
+\[\tau_r = 0.003046 \pm 0.000539~\mathrm{s}.\]
+
+This short rotational persistence indicates rapid reorientation relative to the translational persistence time.
+
+\begin{table}[H]
+\centering
+\caption{Summary of ensemble transport parameters obtained from the simulation. Uncertainties correspond to fit errors.}
+\label{tab:sim_ensemble_summary}
+
+\begin{tabular}{lccccc}
+\toprule
+Dataset & $N$ & Iterations & $\alpha$ & $\tau_p$ (s) & $\tau_r$ (s) \\
+\midrule
+Simulation &
+6 &
+1000 &
+$1.5272 \pm 0.0088$ &
+$0.0310 \pm 0.0036$ &
+$0.00305 \pm 0.00054$ \\
+\bottomrule
+\end{tabular}
+
+\end{table}
+
+
+The summary confirms superdiffusive ensemble behaviour, finite translational persistence on the order of $10^{-2}$~s, and much shorter rotational persistence. These values characterise the time- and length-scales of the simulated dynamics.
+
+\clearpage

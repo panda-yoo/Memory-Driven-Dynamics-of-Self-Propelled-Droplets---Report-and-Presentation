@@ -1,0 +1,173 @@
+\section{Numerical Simulation}
+
+%================================================
+\begin{frame}{Finite Element Solution of the PDE}
+
+	\begin{block}{Weak Form}
+		\[
+			\int_\Omega
+			\frac{\partial c}{\partial t}v\,dx
+			+
+			D
+			\int_\Omega
+			\nabla c \cdot \nabla v\,dx
+			=
+			\int_\Omega
+			\alpha G_{R_t}(\mathbf{x}-\mathbf X_t)v\,dx
+		\]
+	\end{block}
+
+	\begin{alertblock}{Boundary Condition}
+		Reflective (no-flux) boundary:
+		\[
+			\frac{\partial c}{\partial n}=0
+			\qquad \text{on } \partial\Omega
+		\]
+	\end{alertblock}
+
+	\begin{itemize}
+		\item Finite-element discretization.
+		\item Implemented using FEniCS.
+	\end{itemize}
+
+\end{frame}
+
+%================================================
+\begin{frame}{Numerical Integration of the SDE}
+	\begin{block}{Drift term}
+		\[
+			\mathbf{A}(\mathbf{X}_t,t)
+			=
+			-\frac{\beta R_t^3}{\gamma_t\delta^3}
+			\int_{\Omega}
+			G_{R_t}(\mathbf{x}-\mathbf{X}_t)\,
+			\nabla c_t(\mathbf{x})\,d\mathbf{x}
+		\]
+	\end{block}
+
+	\begin{block}{Euler--Maruyama Scheme}
+
+		\[
+			\mathbf X^{n+1}
+			=
+			\mathbf X^{n}
+			+
+			\mathbf A(\mathbf X^n,t_n)\Delta t
+			+
+			\frac{\sqrt{\sigma}}{\eta_t}
+			\sqrt{\Delta t}\,
+			\eta^n
+		\]
+
+		\[
+			\eta^n \sim \mathcal N(0,I)
+		\]
+
+	\end{block}
+
+	\begin{itemize}
+		\item Deterministic drift from chemical gradients.
+		\item Random fluctuations modeled by Gaussian noise.
+		\item Generates stochastic droplet trajectories.
+	\end{itemize}
+
+\end{frame}
+%================================================
+\begin{frame}{Simulation Workflow}
+
+	\begin{columns}[T]
+
+		\column{0.45\textwidth}
+
+		\centering
+		\begin{tikzpicture}[node distance=0.8cm,
+				every node/.style={
+						draw,
+						rounded corners,
+						align=center,
+						minimum width=3.5cm,
+						minimum height=0.6cm}]
+
+			\node (init) {Initialize $c(\mathbf{x},0)$ and $\mathbf{X}_0$};
+			\node (pde) [below=of init] {Solve PDE for $c(\mathbf{x},t)$};
+			\node (grad) [below=of pde] {Compute $\nabla c$};
+			\node (sde) [below=of grad] {Update $\mathbf{X}_t$ (Euler--Maruyama)};
+			\node (src) [below=of sde] {Update source term};
+
+			\draw[->] (init)--(pde);
+			\draw[->] (pde)--(grad);
+			\draw[->] (grad)--(sde);
+			\draw[->] (sde)--(src);
+			\draw[->,bend left=40] (src.east) to node[right] {\small repeat} (pde.east);
+
+		\end{tikzpicture}
+
+		\column{0.55\textwidth}
+
+		\begin{block}{Key Steps}
+			\begin{itemize}
+				\item Evolve the chemical field using the diffusion PDE.
+				\item Compute the gradient-induced drift.
+				\item Update droplet position via Euler--Maruyama and refresh the source term.
+			\end{itemize}
+		\end{block}
+
+		\begin{alertblock}{Outcome}
+			Simultaneous evolution of the chemical field and droplet trajectory generates the simulated paths.
+		\end{alertblock}
+
+	\end{columns}
+
+\end{frame}
+% %================================================
+% \begin{frame}{Simulation Algorithm}
+
+% 	\begin{enumerate}
+% 		\item Initialize the droplet position \(\mathbf{X}_0\) and concentration field \(c(\mathbf{x},0)\).
+% 		\item Solve the diffusion equation for the concentration field using finite element discretization.
+% 		\item Compute the chemical-gradient-induced drift term from the concentration field.
+% 		\item Update the droplet position using the Euler--Maruyama scheme.
+% 		\item Update the source term according to the new droplet position.
+% 		\item Repeat the procedure for all time steps.
+% 	\end{enumerate}
+
+% 	\vspace{0.4cm}
+
+% 	\begin{block}{Outcome}
+% 		This coupled procedure evolves both the concentration field and the droplet trajectory simultaneously.
+% 	\end{block}
+
+% \end{frame}
+
+%================================================
+\begin{frame}{Comparison Between Experiment and Simulation}
+
+	\begin{alertblock}{Ensemble Analysis Procedure}
+
+		\begin{itemize}
+
+			\item MSD, VACF, and OCF were computed for each retained trajectory.
+
+			\item Lag times were restricted to approximately
+			      $40\%$ of the trajectory length to ensure reliable statistics.
+
+			\item Ensemble observables were obtained by averaging over all retained droplets.
+
+			\item MSD exponents were obtained from
+			      $\mathrm{MSD}(\tau)\sim\tau^\alpha$
+			      using the first $30\%$ of the available lag-time range.
+			\item Exponential fits to VACF and OCF were used
+			      to estimate characteristic persistence times
+			      $\tau_p$ and $\tau_r$.
+			\item Exponential fits
+			      $C_v(\tau)\sim e^{-\tau/\tau_p}$ and
+			      $C_\theta(\tau)\sim e^{-\tau/\tau_r}$
+			      yielded $\tau_p$ and $\tau_r$.
+
+		\end{itemize}
+
+	\end{alertblock}
+
+
+\end{frame}
+%================================================

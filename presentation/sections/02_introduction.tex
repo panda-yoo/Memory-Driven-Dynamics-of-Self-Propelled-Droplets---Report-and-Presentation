@@ -1,0 +1,289 @@
+\section{Introduction}
+%================================================
+\begin{frame}{Active Matter Systems}
+
+	\begin{columns}[T]
+
+		%-----------------------------------
+		\column{0.38\textwidth}
+
+		\begin{itemize}
+			\item Active matter consists of entities that consume energy and convert it into motion.
+
+			\item Active systems are found in both living and synthetic systems.
+
+			\item These systems exhibit persistence, collective behaviour, and non-equilibrium transport.
+		\end{itemize}
+
+		\vspace{-0.2cm}
+
+		\begin{alertblock}{Motivating Question}
+			What mechanism allows active droplets to remember where they have been?
+		\end{alertblock}
+
+		%-----------------------------------
+		\column{0.58\textwidth}
+
+		\begin{block}{Examples of Active Matter}
+
+			\centering
+
+			\begin{tabular}{ccc}
+
+				\includegraphics[height=1.9cm]{Starling_murmuration.jpg}
+				 &
+				\includegraphics[height=1.9cm]{bacteria.png}
+				 &
+				\includegraphics[height=1.9cm]{lab_droplet_image.png}
+
+				\\[0.05cm]
+
+				{\small Bird flock}
+				 &
+				{\small Bacteria}
+				 &
+				{\small Active droplet}
+			\end{tabular}
+
+		\end{block}
+		\vspace{0.1cm}
+		{\tiny
+			\textbf{Image Sources}
+			\begin{itemize}
+				\item Bird flock: \emph{A murmuration of starlings at Gretna}, adapted from Walter Baxter (2011), Wikimedia Commons.
+
+				\item Bacterial colony: Growing \textit{E. coli} microcolony exhibiting active-nematic ordering, adapted from Dell'Arciprete \textit{et al.}, \emph{Nature Communications} (2018).
+
+				\item Active droplet: Self-propelled Belousov--Zhabotinsky (BZ) droplet driven by chemical oscillations and Marangoni flow, Nonlinear Dynamics Laboratory, NITK.
+			\end{itemize}
+		}
+	\end{columns}
+
+
+\end{frame}
+%================================================
+
+%================================================
+\begin{frame}{Why Active Droplets?}
+
+	\begin{columns}[T]
+
+		%-----------------------------------
+		\column{0.48\textwidth}
+
+		\centering
+
+		\includegraphics[width=\linewidth]{BZ_active_droplet.png}
+
+		\vspace{0.15cm}
+
+		{\scriptsize
+			BZ active droplet exhibiting internal chemical-wave dynamics.
+			Adapted from Meshram and Shajahan (2025).
+		}
+
+		%-----------------------------------
+		\column{0.48\textwidth}
+
+		\begin{block}{Key Features}
+
+			\begin{itemize}
+
+				\item Simple and controllable active matter system.
+
+				\item Self-propelled through internally generated chemical activity.
+
+				\item Continuously modifies its surrounding environment.
+
+				\item Provides a natural platform for studying memory and feedback effects.
+
+			\end{itemize}
+
+		\end{block}
+
+	\end{columns}
+
+	\vspace{0.2cm}
+
+	\begin{alertblock}{Hypothesis}
+		The self-generated chemical field may retain information about previously visited locations and influence future motion.
+	\end{alertblock}
+
+\end{frame}
+%================================================
+
+%------------------------------------------------
+\begin{frame}{Observation: Self-Avoiding Motion}
+
+	\begin{columns}[T]
+
+		\column{0.60\textwidth}
+
+		\centering
+		\includegraphics[height=0.62\textheight]{for_2.1_droplets_droplet_3_trajectory.png}
+
+		\column{0.40\textwidth}
+
+		\begin{block}{Observation}
+			The droplet tends to avoid regions it has previously visited.
+		\end{block}
+
+		\vspace{0.2cm}
+
+		\begin{itemize}
+			\item Motion is not purely random.
+			\item Trajectories exhibit self-avoidance.
+			\item Past motion appears to influence future motion.
+		\end{itemize}
+
+	\end{columns}
+
+	\vspace{0.15cm}
+
+	\begin{alertblock}{Research Question}
+		What mechanism allows the droplet to remember where it has been?
+	\end{alertblock}
+
+\end{frame}
+%------------------------------------------------
+\begin{frame}{A Possible Explanation: Memory}
+
+	\centering
+
+	\begin{tikzpicture}[
+			node distance=2.5cm,
+			every node/.style={
+					draw,
+					rounded corners,
+					align=center,
+					minimum width=3.8cm,
+					minimum height=1cm
+				},
+			>=Stealth
+		]
+
+		\node (motion) {Droplet Motion};
+
+		\node (deposit) [right=of motion]
+		{Chemical\\Deposition};
+
+		\node (memory) [below=of deposit,
+			fill=red!15,
+			draw=red!70!black]
+		{Chemical Field\\(Memory Storage)};
+
+		\node (retrieve) [left=of memory,
+			fill=red!10]
+		{Gradient Sensing\\(Memory Retrieval)};
+
+		\draw[->,thick] (motion) -- (deposit);
+		\draw[->,thick] (deposit) -- (memory);
+		\draw[->,thick] (memory) -- (retrieve);
+		\draw[->,thick] (retrieve) -- (motion);
+
+	\end{tikzpicture}
+
+	\vspace{0.5cm}
+
+	\begin{alertblock}{Hypothesis}
+		The droplet deposits a chemical trail that stores information about previously visited locations. By sensing gradients in this field, the droplet's future motion becomes influenced by its past motion.
+	\end{alertblock}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Research Question}
+
+	\begin{center}
+
+		\Large
+		Does the observed self-avoidance indicate memory-driven dynamics?
+
+	\end{center}
+
+	\vspace{0.5cm}
+
+	\begin{block}{Questions}
+		\begin{enumerate}
+			\item Does the droplet retain information about its past motion?
+			\item Can this memory be quantified from trajectory data?
+			\item Can a memory-driven model reproduce the observed behaviour?
+		\end{enumerate}
+	\end{block}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{How Do We Quantify Memory?}
+
+	\centering
+
+	\begin{tikzpicture}[
+			node distance=2.2cm,
+			every node/.style={
+					draw,
+					rounded corners,
+					align=center,
+					minimum width=3.2cm,
+					minimum height=1cm
+				},
+			>=Stealth
+		]
+
+		\node (traj) {Trajectory Data};
+
+		\node (stats) [right=of traj]
+		{Statistical Analysis};
+
+		\node (memory) [right=of stats,
+			fill=red!25,
+			draw=red!80!black,
+			very thick]
+		{Memory Quantification};
+
+		% \node (memory) [right=of stats,
+		% fill=red!15]
+		% {Memory Quantification};
+
+		\draw[->,thick] (traj) -- (stats);
+		\draw[->,thick] (stats) -- (memory);
+
+	\end{tikzpicture}
+
+	\vspace{0.9cm}
+
+	\begin{center}
+		\large
+		From observed trajectories, we extract statistical signatures of memory.
+	\end{center}
+	\begin{columns}
+		\column{0.4\textwidth}
+
+		\begin{block}{Transport Characterization}
+			\begin{itemize}
+				\item MSD
+				      {\small \\How far does the droplet travel?}
+				      % \item MSD \\- How far does the droplet travel?
+				\item Local MSD Exponent
+					      {\small \\Does transport change with time?}
+			\end{itemize}
+		\end{block}
+
+		\column{0.4\textwidth}
+
+		\begin{alertblock}{Memory Characterization}
+			% \begin{block}{Memory Characterization}
+			\begin{itemize}
+				\item Velocity Autocorrelation
+					      {\small \\How long is velocity remembered?}
+
+				\item Orientation Correlation
+					      {\small \\How long is direction remembered?}
+
+			\end{itemize}
+		\end{alertblock}
+
+	\end{columns}
+
+
+\end{frame}

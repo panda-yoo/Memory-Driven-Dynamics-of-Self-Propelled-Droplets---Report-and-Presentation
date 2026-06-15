@@ -1,0 +1,53 @@
+\begin{frame}{Research Strategy and Methodology}
+
+	\centering
+
+	\begin{tikzpicture}[
+			node distance=1.cm,
+			every node/.style={
+					draw,
+					rounded corners,
+					align=center,
+					minimum width=3.4cm,
+					minimum height=0.9cm
+				}
+		]
+
+		\node[fill=red!10,draw=red] (goal)
+		{Understand Memory-Driven\\Motion in Active Droplets};
+
+		\node[below left=of goal,xshift=-1cm] (exp)
+		{Experimental\\Trajectory Analysis};
+
+		\node[below right=of goal,xshift=1cm] (model)
+		{Memory-Driven\\Model Development};
+
+		\node[below=of exp] (track)
+		{Detection \& Tracking};
+
+		\node[below=of model] (pde)
+		{PDE--SDE\\Formulation};
+
+		\node[below=2.0cm of goal,fill=red!10,draw=red] (compare)
+		{Experiment--Simulation\\Comparison};
+
+		\draw[->] (goal)--(exp);
+		\draw[->] (goal)--(model);
+
+		\draw[->] (exp)--(track);
+		\draw[->] (model)--(pde);
+
+		\draw[->] (track)--(compare);
+		\draw[->] (pde)--(compare);
+
+	\end{tikzpicture}
+
+	\vspace{0.3cm}
+
+	\begin{alertblock}{Objective}
+		Combine experimental trajectory analysis with a memory-driven
+		PDE--SDE model to identify and reproduce memory signatures
+		in active droplet motion.
+	\end{alertblock}
+
+\end{frame}

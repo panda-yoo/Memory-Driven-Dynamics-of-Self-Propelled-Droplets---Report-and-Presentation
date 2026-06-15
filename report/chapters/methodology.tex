@@ -1,0 +1,382 @@
+\chapter{Methodology}
+
+\section{Overview of the Methodology}
+
+This thesis consists of two connected parts. The first part extracts droplet trajectories from experimental video data using YOLOv8-based object detection and tracking. The second part models the droplet motion using a coupled PDE--SDE framework and compares the simulated behaviour with the experimentally extracted trajectories.
+
+%===========================================================
+\section{Trajectory Extraction from Video Data}
+\subsection{Experimental/System Overview}
+
+The experimental system consists of self-propelled Belousov--Zhabotinsky (BZ)\cite{FastMoving2021article,Shajahan2026} reaction droplets suspended in a monoolein--squalane oil medium. The BZ reaction is a nonlinear chemical oscillator that undergoes periodic oxidation and reduction cycles. These oscillations generate propagating chemical waves within the droplet and continuously convert chemical energy into mechanical motion.
+Self-propulsion arises from Marangoni stresses\cite{izzet2020,FastMoving2021article} generated at the droplet interface. \\Bromine species produced by the internal chemical reaction interact with the surrounding monoolein surfactant, creating spatial variations in interfacial tension. The resulting surface-tension gradients drive fluid flow around the droplet and propel it through the oil medium. The speed and directional fluctuations of the droplet are controlled by the excitability of the chemical reaction, which can be tuned experimentally by varying the sodium bromate concentration.
+The droplet motion is recorded from above using a CMOS camera and treated as approximately two-dimensional.\\ Image sequences are acquired at a fixed frame rate, and each frame contains information about both the droplet position and its internal chemical state. The recorded videos are processed using image-analysis techniques to identify and track individual droplets through time.
+The primary objective of the data-extraction pipeline is to transform raw video recordings into clean trajectories and time series suitable for quantitative analysis. From the extracted trajectories, dynamical quantities such as droplet speed, directional fluctuations, oscillation frequency, inter-droplet distance, and interaction time can be calculated. These measurements provide a quantitative description of how chemical excitability influences the motion and interactions of active BZ droplets.
+%-----------------------------------------------------------
+\subsection{Object Detection and Tracking Using YOLOv8}
+
+Droplet detection and tracking were performed using a YOLOv8-based\cite{ultralytics2024} pipeline. The trained model identifies droplets in each video frame and returns both the bounding-box coordinates and a persistent tracking ID. This allows individual droplets to be followed consistently throughout the video sequence.
+
+Figure~\ref{fig:yolo_tracking_example} shows an example of the detection and tracking process. Each droplet is assigned a bounding box, confidence score, and tracking ID.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\linewidth]{yolo_tracking_example.png}
+    \caption{
+    Example of YOLOv8-based droplet detection and tracking. Each detected droplet is assigned a bounding box, confidence score, and tracking ID, allowing consistent tracking across video frames.
+    }
+    \label{fig:yolo_tracking_example}
+\end{figure}
+
+For each detected droplet, the center of the bounding box is used as the droplet position:
+\begin{equation}
+x_c = \frac{x_1+x_2}{2},
+\qquad
+y_c = \frac{y_1+y_2}{2}.
+\end{equation}
+
+This produces a trajectory of the form
+\[
+\{
+\mathbf{X}(t_1),
+\mathbf{X}(t_2),
+\ldots,
+\mathbf{X}(t_N)
+\},
+\]
+where
+\[
+\mathbf{X}(t_i)=(x_i,y_i).
+\]
+
+The trajectories are sorted according to frame index so that the temporal ordering remains correct throughout the analysis.
+
+%-----------------------------------------------------------
+\subsection{Post-processing of Extracted Trajectories}
+
+The trajectories obtained from the YOLOv8 tracking pipeline were stored as time-ordered sequences of droplet positions. For each detected droplet, the frame number, tracking ID, and centroid coordinates were recorded and used directly for subsequent statistical analysis.
+
+Only trajectories that remained visible for a sufficiently long duration were retained for analysis. Short or incomplete tracks resulting from temporary loss of detection were excluded. No additional smoothing, interpolation, or filtering procedures were applied to the trajectory data.
+
+The extracted trajectories were then used to compute statistical observables such as the mean-squared displacement (MSD), local MSD exponent, velocity autocorrelation function (VACF), and orientation correlation function.
+%-----------------------------------------------------------
+\subsection{Mean Squared Displacement Computation}
+
+The mean squared displacement (MSD)\cite{klafter2011} is used to characterise the transport properties of the droplets:
+\begin{equation}
+\mathrm{MSD}(\tau)
+=
+\left\langle
+|\mathbf{X}(t+\tau)-\mathbf{X}(t)|^2
+\right\rangle.
+\end{equation}
+
+The MSD is computed for different lag times \(\tau\) and averaged over multiple trajectories when possible. The resulting curves are used to distinguish between ballistic, diffusive, and anomalous transport regimes.
+
+
+%-----------------------------------------------------------
+\subsection{Local MSD Exponent}
+
+To investigate the lag-dependent transport behaviour, the local MSD exponent was computed from the logarithmic derivative of the MSD\cite{balakrishnan2021},
+
+\begin{equation}
+\alpha(\tau)
+=
+\frac{d\log[\mathrm{MSD}(\tau)]}
+     {d\log(\tau)}.
+\end{equation}
+
+The local exponent provides information about the instantaneous transport regime. Values
+$\alpha \approx 2$ correspond to ballistic motion, $\alpha \approx 1$ to normal diffusion,
+and intermediate values indicate superdiffusive behaviour.
+%-----------------------------------------------------------
+\subsection{Velocity Autocorrelation Function}
+The velocity autocorrelation function (VACF)\cite{balakrishnan2021} was used to quantify
+the persistence of droplet motion,
+
+\begin{equation}
+C_v(\tau)
+=
+\frac{\langle
+\mathbf{v}(t)\cdot\mathbf{v}(t+\tau)
+\rangle}
+{\langle |\mathbf{v}(t)|^2\rangle}.
+\end{equation}
+
+The persistence time $\tau_p$ was obtained by fitting the
+correlation function to an exponential decay\cite{balakrishnan2021},
+
+\begin{equation}
+C_v(\tau)
+\sim
+e^{-\tau/\tau_p}.
+\end{equation}
+%-----------------------------------------------------------
+\subsection{Orientation Correlation Function}
+The orientation correlation function was computed as\cite{balakrishnan2021}
+
+\begin{equation}
+C_\theta(\tau)
+=
+\left<
+\cos[\theta(t+\tau)-\theta(t)]
+\right>.
+\end{equation}
+
+The rotational persistence time $\tau_r$ was obtained from
+an exponential fit\cite{balakrishnan2021},
+
+\begin{equation}
+C_\theta(\tau)
+\sim
+e^{-\tau/\tau_r}.
+\end{equation}
+
+%===========================================================
+\section{Model Parameters and Notation}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+Symbol & Description \\
+\hline
+\(D\) & Diffusion coefficient \\
+\(\alpha_t\) & Source strength \\
+\(R_t\) & Droplet radius \\
+\(\gamma_t\) & Friction coefficient \\
+\(\sigma\) & Noise strength \\
+\(\delta\) & Characteristic length scale \\
+\(\Omega\) & Computational domain \\
+\hline
+\end{tabular}
+\caption{Main parameters used in the PDE--SDE model\cite{droplet2025}.}
+\end{table}
+
+%===========================================================
+\section{Mathematical Model}
+
+\subsection{Self-Repelling Random Walk Model}
+
+The droplet dynamics are modeled using a coupled PDE--SDE system\cite{droplet2025} consisting of a chemical concentration field and stochastic droplet motion.
+
+The concentration field satisfies the following  Non-Markovian Droplet model of Chen et al.
+\cite{droplet2025},
+\begin{equation}
+\frac{\partial c}{\partial t}
+=
+D\nabla^2 c
++
+\alpha_t G_{R_t}(\mathbf{x}-\mathbf{X}_t),
+\end{equation}
+where the source term describes the release of oil-filled micelles from the droplet.
+
+The droplet motion is modeled by\cite{droplet2025}
+\begin{equation}
+\gamma_t \dot{\mathbf{X}}_t
+=
+-\beta\frac{R_t^3}{\delta^3}
+\int_{\Omega}
+G_{R_t}(\mathbf{x}-\mathbf{X}_t)
+\nabla c_t(\mathbf{x})\,d\mathbf{x}
++
+\sqrt{\sigma}\,\xi_t.
+\end{equation}
+
+The first term represents self-repelling motion generated by the chemical gradient, while the stochastic term models fluctuations arising from unresolved microscopic processes and environmental noise.
+
+%===========================================================
+\section{Numerical Simulation of the PDE--SDE System}
+The finite-element weak formulation follows standard procedures
+\cite{fenics2016}.
+\subsection{Variational / Weak Form of the PDE}
+
+To derive the weak formulation, let \(v\in H^1(\Omega)\) be a test function. Multiplying the concentration equation by \(v\) and integrating over the domain gives
+\begin{equation}
+\int_{\Omega}
+\frac{\partial c}{\partial t}v\,d\mathbf{x}
+=
+D\int_{\Omega}
+\nabla^2 c\,v\,d\mathbf{x}
++
+\int_{\Omega}
+\alpha_t
+G_{R_t}(\mathbf{x}-\mathbf{X}_t)
+v\,d\mathbf{x}.
+\end{equation}
+
+Applying integration by parts to the diffusion term,
+\begin{equation}
+\int_{\Omega}
+\nabla^2 c\,v\,d\mathbf{x}
+=
+-\int_{\Omega}
+\nabla c\cdot\nabla v\,d\mathbf{x}
++
+\int_{\partial\Omega}
+\frac{\partial c}{\partial n}v\,ds.
+\end{equation}
+
+Using the no-flux boundary condition
+\begin{equation}
+\frac{\partial c}{\partial n}=0
+\qquad
+\text{on }\partial\Omega,
+\end{equation}
+the boundary contribution vanishes.
+
+The weak form becomes
+\begin{equation}
+\int_{\Omega}
+\frac{\partial c}{\partial t}v\,d\mathbf{x}
++
+D\int_{\Omega}
+\nabla c\cdot\nabla v\,d\mathbf{x}
+=
+\int_{\Omega}
+\alpha_t
+G_{R_t}(\mathbf{x}-\mathbf{X}_t)
+v\,d\mathbf{x}.
+\end{equation}
+
+%-----------------------------------------------------------
+\subsection{Finite Element Discretization of the PDE}
+The finite-element discretization follows the standard Galerkin formulation
+\cite{fenics2016}.
+The weak form is discretized using a finite element approximation. Let \(V_h\subset H^1(\Omega)\) denote a finite-dimensional space with basis functions \(\{\phi_i\}_{i=1}^N\).
+
+The approximate solution is written as
+\begin{equation}
+c_h(\mathbf{x},t)
+=
+\sum_{j=1}^{N}
+C_j(t)\phi_j(\mathbf{x}).
+\end{equation}
+
+Substituting into the weak form and choosing \(v=\phi_i\) gives
+\begin{equation}
+\sum_{j=1}^{N}
+M_{ij}\dot{C}_j(t)
++
+D\sum_{j=1}^{N}
+K_{ij}C_j(t)
+=
+F_i(t),
+\end{equation}
+where
+\begin{align}
+M_{ij}
+&=
+\int_{\Omega}
+\phi_j\phi_i\,d\mathbf{x},
+\\
+K_{ij}
+&=
+\int_{\Omega}
+\nabla\phi_j\cdot\nabla\phi_i\,d\mathbf{x},
+\\
+F_i(t)
+&=
+\int_{\Omega}
+\alpha_t
+G_{R_t}(\mathbf{x}-\mathbf{X}_t)
+\phi_i\,d\mathbf{x}.
+\end{align}
+
+A backward Euler discretization in time yields
+\begin{equation}
+\left(
+M+\Delta t\,DK
+\right)
+\mathbf{C}^{n+1}
+=
+M\mathbf{C}^{n}
++
+\Delta t\,\mathbf{F}^{n+1}.
+\end{equation}
+
+The resulting finite element system is solved numerically at each time step using the FEniCS finite element framework\cite{fenics2016}.
+
+%-----------------------------------------------------------
+\subsection{Numerical Discretization of the SDE}
+The stochastic differential equation is integrated using the Euler--Maruyama method
+\cite{balakrishnan2021,SDE_EulerMaruyama}.
+The droplet dynamics can be rewritten in stochastic differential equation form:
+\begin{equation}
+d\mathbf{X}_t
+=
+\mathbf{A}(\mathbf{X}_t,t)\,dt
++
+\mathbf{B}\,d\mathbf{W}_t,
+\end{equation}
+where
+\begin{equation}
+\mathbf{A}(\mathbf{X}_t,t)
+=
+-\frac{\beta R_t^3}{\gamma_t\delta^3}
+\int_{\Omega}
+G_{R_t}(\mathbf{x}-\mathbf{X}_t)
+\nabla c(\mathbf{x},t)\,d\mathbf{x},
+\end{equation}
+and
+\begin{equation}
+\mathbf{B}
+=
+\frac{\sqrt{\sigma}}{\gamma_t}I.
+\end{equation}
+
+Here, \(\mathbf{W}_t\) denotes a Wiener process.
+
+The stochastic dynamics are integrated using the Euler--Maruyama method:
+\begin{equation}
+\mathbf{X}^{n+1}
+=
+\mathbf{X}^{n}
++
+\mathbf{A}(\mathbf{X}^{n},t_n)\Delta t
++
+\frac{\sqrt{\sigma}}{\gamma_t}
+\sqrt{\Delta t}\,
+\boldsymbol{\eta}^{n},
+\end{equation}
+where
+\begin{equation}
+\boldsymbol{\eta}^{n}
+\sim
+\mathcal{N}(\mathbf{0},I).
+\end{equation}
+
+This update rule advances the droplet trajectory while incorporating both deterministic self-repelling motion and stochastic fluctuations.
+
+%-----------------------------------------------------------
+\subsection{Simulation Algorithm}
+
+The numerical simulation proceeds through the following steps:
+
+\begin{enumerate}
+    \item Initialize the droplet position \(\mathbf{X}_0\) and concentration field \(c(\mathbf{x},0)\).
+    
+    \item Solve the diffusion equation for the concentration field using the finite element discretization.
+    
+    \item Compute the chemical-gradient-induced drift term from the concentration field.
+    
+    \item Update the droplet position using the Euler--Maruyama scheme.
+    
+    \item Update the source term according to the new droplet position.
+    
+    \item Repeat the procedure for all time steps.
+\end{enumerate}
+
+This coupled procedure evolves both the concentration field and the droplet trajectory simultaneously.
+
+%===========================================================
+\section{Comparison Between Experiment and Simulation}
+
+The experimentally extracted trajectories and the simulated trajectories are compared using common observables including velocity statistics, orientation dynamics, turning-angle distributions, and mean squared displacement curves.
+
+The primary goal is to determine whether the coupled PDE--SDE model reproduces the main qualitative and quantitative features of the experimentally observed self-repelling droplet motion.
+
+%===========================================================
+\section{Summary}
+
+The methodology combines computer-vision-based trajectory extraction with numerical simulation of a coupled PDE--SDE model. YOLOv8 is used to detect and track droplets from experimental videos, while the extracted trajectories are analysed using velocity, orientation, and MSD statistics. The resulting data are then compared with simulations of the self-repelling random walk model.

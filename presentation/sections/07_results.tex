@@ -1,0 +1,349 @@
+%================================================
+\section{Results and Discussion}
+
+%================================================
+\subsection{Ensemble}
+%================================================
+\begin{frame}{Ensemble Trajectory Comparison}
+	\vspace{-0.2cm}
+	\begin{columns}[T]
+
+		\column{0.48\textwidth}
+
+		\centering
+		\textbf{Experiment}
+
+		\vspace{0.15cm}
+		\includegraphics[height=0.62\textheight]{for_2.3_droplets_all_droplets_trajectory_comparison.png}
+		\column{0.48\textwidth}
+
+		\centering
+		\textbf{Simulation}
+
+		\vspace{0.15cm}
+
+		\includegraphics[height=0.62\textheight]{output_sim_droplet_6_tracking_all_droplets_trajectory_comparison.png}
+
+	\end{columns}
+
+	\vspace{0.25cm}
+
+	\centering
+	\small
+
+	Persistent exploration and self-avoiding behaviour are observed in both datasets.
+	The trajectory start and end positions are indicated by
+	$\circ$ and $\blacksquare$, respectively.
+
+\end{frame}
+
+%================================================
+\begin{frame}{Ensemble Mean-Squared Displacement}
+
+	\begin{columns}[T]
+
+		%------------------------------------------------
+		\column{0.48\textwidth}
+
+		\centering
+		\textbf{Experiment}
+
+		% \vspace{-0.05cm}
+
+		\includegraphics[height=0.52\textheight]{for_2.3_droplets_ensemble_for_2.3_droplets_loglog_msd.png}
+
+		\vspace{-0.1cm}
+
+		{\small
+			$\alpha = 1.88 \pm 0.00$
+		}
+
+		%------------------------------------------------
+		\column{0.48\textwidth}
+
+		\centering
+		\textbf{Simulation}
+
+		% \vspace{0.15cm}
+		% \vspace{-0.15cm}
+
+		\includegraphics[height=0.52\textheight]{output_sim_ensemble_droplet_6_tracking_loglog_msd.png}
+
+		\vspace{-0.1cm}
+
+		{\small
+			$\alpha = 1.53 \pm 0.01$
+		}
+
+	\end{columns}
+
+	\vspace{-0.1cm}
+
+	\begin{alertblock}{Key Observation}
+		Both datasets exhibit superdiffusive transport ($\alpha > 1$), indicating persistent motion and departure from normal diffusion.
+	\end{alertblock}
+
+\end{frame}
+
+
+%================================================
+\begin{frame}{Ensemble Velocity Autocorrelation Function}
+	\vspace{-0.2cm}
+
+	\begin{columns}[T]
+
+		%------------------------------------------------
+		\column{0.48\textwidth}
+
+		\centering
+		\textbf{Experiment}
+
+		\vspace{0.15cm}
+
+		\includegraphics[width=\linewidth]{for_2.3_droplets_ensemble_for_2.3_droplets_vacf.png}
+
+		\vspace{0.1cm}
+
+		{\small
+			$\tau_p = 125.3 \pm 11.1~\mathrm{s}$
+		}
+
+		%------------------------------------------------
+		\column{0.48\textwidth}
+
+		\centering
+		\textbf{Simulation}
+
+		\vspace{0.15cm}
+
+		\includegraphics[width=\linewidth]{output_sim_ensemble_droplet_6_tracking_vacf.png}
+
+		\vspace{0.1cm}
+
+		{\small
+			$\tau_p = 0.031 \pm 0.004$
+		}
+
+	\end{columns}
+
+	\vspace{0.2cm}
+
+	\begin{alertblock}{Key Observation}
+		Both VACFs decay over a finite timescale, indicating persistent velocity correlations and finite translational memory.
+	\end{alertblock}
+
+\end{frame}
+%================================================
+\begin{frame}{Ensemble Orientation Correlation Function}
+
+	\begin{columns}[T]
+
+		%------------------------------------------------
+		\column{0.48\textwidth}
+
+		\centering
+		\textbf{Experiment}
+
+		\vspace{0.15cm}
+
+		\includegraphics[width=\linewidth]{for_2.3_droplets_ensemble_for_2.3_droplets_orientation_corr.png}
+
+		\vspace{0.1cm}
+
+		{\small
+			$\tau_r = 59.8 \pm 0.8~\mathrm{s}$
+		}
+
+		%------------------------------------------------
+		\column{0.48\textwidth}
+
+		\centering
+		\textbf{Simulation}
+
+		\vspace{0.15cm}
+
+		\includegraphics[width=\linewidth]{output_sim_ensemble_droplet_6_tracking_orientation_corr.png}
+
+		\vspace{0.1cm}
+
+		{\small
+			$\tau_r = 0.00305 \pm 0.00054$
+		}
+
+		% If using scaled values instead:
+		% {\small
+		% $\tau_r = 0.00305 \pm 0.00054$
+		%
+		% $\tau_r^{(\mathrm{scaled})}
+		% =
+		% 1.41 \pm 0.25~\mathrm{s}$
+		% }
+
+	\end{columns}
+
+	\vspace{0.2cm}
+
+	\begin{alertblock}{Key Observation}
+		The orientation correlations decay gradually in both experiment and simulation, indicating finite directional persistence and rotational memory.
+	\end{alertblock}
+
+\end{frame}
+%================================================
+
+%================================================
+\begin{frame}{Summary of Ensemble Transport Parameters}
+
+	\centering
+	\scriptsize
+
+	\begin{table}
+		\centering
+		\begin{tabular}{lcccccc}
+			\toprule
+			Dataset      &
+			$N$          &
+			Frames /
+			Iterations   &
+			$\alpha$     &
+			$\tau_p$ (s) &
+			$\tau_r$ (s)                         \\
+			\midrule
+
+			2.1
+			             & 4
+			             & 3648
+			             & $1.8345 \pm 0.0019$
+			             & $61.83 \pm 0.36$
+			             & $13.49 \pm 0.34$
+			\\
+
+			2.2
+			             & 6
+			             & 3363
+			             & $1.6482 \pm 0.0053$
+			             & $17.14 \pm 0.56$
+			             & $3.96 \pm 0.26$
+			\\
+
+			2.3
+			             & 6
+			             & 3951
+			             & $1.8776 \pm 0.0012$
+			             & $125.25 \pm 1.09$
+			             & $59.78 \pm 0.78$
+			\\
+
+			2.4
+			             & 3
+			             & 5267
+			             & $1.7025 \pm 0.0049$
+			             & $28.40 \pm 0.22$
+			             & $32.18 \pm 0.35$
+			\\
+
+			2\&4 $\mu$L
+			             & 4
+			             & 5526
+			             & $1.5592 \pm 0.0066$
+			             & $14.32 \pm 0.16$
+			             & $10.83 \pm 0.20$
+			\\
+
+			\midrule
+
+			Simulation
+			             & 6
+			             & 1000
+			             & $1.5272 \pm 0.0088$
+			             & $0.0310 \pm 0.0036$
+			             & $0.00305 \pm 0.00054$
+			\\
+
+			Simulation (Scaled)
+			             & 6
+			             & 1000
+			             & $1.5272 \pm 0.0088$
+			             & $14.32 \pm 1.66$
+			             & $1.41 \pm 0.25$
+			\\
+
+			\bottomrule
+		\end{tabular}
+	\end{table}
+
+	\vspace{0.2cm}
+
+	{\tiny
+		Simulation persistence times were converted using
+		$t_{\mathrm{scale}}
+			=
+			\tau_p^{\mathrm{exp}}
+			/
+			\tau_p^{\mathrm{sim}}
+			\approx 462$.
+	}
+
+	\begin{alertblock}{Key Observation}
+		The model reproduces the superdiffusive transport exponent
+		($\alpha>1$) and exhibits finite velocity and directional persistence,
+		consistent with memory-driven dynamics.
+	\end{alertblock}
+
+\end{frame}
+
+\begin{frame}{Experiment--Simulation Comparison}
+
+	\centering
+
+	\begin{tabular}{lcc}
+		\toprule
+		Feature                     & Experiment   & Simulation   \\
+		\midrule
+		Self-avoidance              & $\checkmark$ & $\checkmark$ \\
+		Superdiffusion ($\alpha>1$) & $\checkmark$ & $\checkmark$ \\
+		VACF decay                  & $\checkmark$ & Partial      \\
+		OCF decay                   & $\checkmark$ & Partial      \\
+		Translational memory        & $\checkmark$ & Partial      \\
+		Rotational memory           & $\checkmark$ & Partial      \\
+		Non-Markovian behaviour     & $\checkmark$ & Qualitative  \\
+		\bottomrule
+	\end{tabular}
+
+	\vspace{0.2cm}
+	\begin{minipage}{0.9\linewidth}
+		\footnotesize
+		\textbf{Limitation:}
+		The simulation reproduces the qualitative decay of the VACF and OCF,
+		but the persistence times ($\tau_p,\tau_r$) differ substantially from
+		the experimental values.
+	\end{minipage}
+	% \textbf{Conclusion:}
+	\begin{alertblock}{Conclusion}
+		The PDE--SDE model captures the key transport and memory signatures
+		(self-avoidance, superdiffusion, and finite correlation decay),
+		but does not quantitatively reproduce the experimental persistence times.
+		% 	The PDE--SDE model reproduces the main transport and memory signatures observed experimentally.
+	\end{alertblock}
+
+\end{frame}
+
+%================================================
+% \subsection{Summary of Results}
+
+% \begin{frame}{Summary of Results}
+
+% 	\begin{itemize}
+% 		\item The experimental trajectories show self-avoiding motion.
+% 		\item The MSD indicates superdiffusive transport.
+% 		\item The local MSD exponent reveals a change in transport regime with lag time.
+% 		\item The VACF and OCF show finite velocity and directional persistence.
+% 		\item The coupled PDE--SDE model reproduces the main qualitative trends seen in experiment.
+% 	\end{itemize}
+
+% 	\vspace{0.3cm}
+
+% 	\begin{alertblock}{Main Conclusion}
+% 		The simulation captures the observed self-avoidance, transport scaling, and finite memory timescales.
+% 	\end{alertblock}
+
+% \end{frame}

@@ -1,0 +1,257 @@
+\chapter{Foundations of Random Walks and Diffusion}
+
+% Background
+\section{Background}
+
+Active matter plays an important role in a wide range of natural and synthetic systems, including bacterial colonies, flocks of birds, and synthetic microswimmers such as autophoretic Janus colloids \cite{vrugt2025}. These nonequilibrium systems consist of self-propelled agents that continuously consume energy from their surroundings, chemical reactions, or internal mechanisms to generate autonomous motion through the surrounding medium. Unlike systems in thermodynamic equilibrium, active matter systems exhibit persistent motion and complex dynamical behavior arising from the continuous conversion of energy into mechanical motion \cite{vrugt2025,balakrishnan2021}.
+
+In chemically active droplets, self-propulsion generally arises from the coupling between internal chemical reactions and interfacial tension gradients \cite{izzet2020,FastMoving2021article,Shajahan2026}. Chemical activity within the droplet generates local concentration differences near the interface, which produce Marangoni flows that drive motion through the surrounding fluid. In Belousov–Zhabotinsky (BZ) based droplets, oscillatory chemical reactions can lead to time-dependent surface tension variations, resulting in spontaneous motion and changes in propulsion direction. Such systems provide an important platform for studying the conversion of chemical energy into directed transport and complex nonequilibrium dynamics in soft matter systems \cite{izzet2020,vrugt2025}.
+
+% Random Walks and Diffusion
+\section{Random Walks and Diffusion}
+
+Random walks \cite{pearson1905,klafter2011,resnick1992} provide one of the simplest mathematical descriptions of stochastic motion and form the microscopic foundation of diffusion phenomena. They are widely used in statistical physics, biology, chemistry, and active matter systems to describe the motion of particles undergoing random displacements. In active matter systems, random walk models are particularly important because they provide a framework for understanding how microscopic fluctuations give rise to macroscopic transport behavior.
+
+\subsection{Classical Symmetric Random Walk}
+
+The following derivation follows standard treatments of random walks
+\cite{klafter2011,resnick1992}.Consider a particle performing a random walk on a one-dimensional lattice\cite{klafter2011,resnick1992}. At each time step, the walker moves to one of its neighboring sites independently of its previous motion. The probability of moving to the right is denoted by $p$, while the probability of moving to the left is $q = 1-p$.
+
+The position of the walker after $n$ steps is determined by the cumulative sequence of these random displacements. Following the formulation presented in \cite{klafter2011}, the characteristic function of the random walk can be written as
+
+\begin{equation}
+\lambda(\theta)=pe^{i\theta}+qe^{-i\theta}.
+\end{equation}
+
+The probability of finding the walker at site $j$ after $n$ steps is obtained using the Fourier representation\cite{klafter2011}
+
+\begin{equation}
+P_n(j)
+=
+\frac{1}{2\pi}
+\int_{-\pi}^{\pi}
+\left(
+pe^{i\theta}+qe^{-i\theta}
+\right)^n
+e^{-ij\theta}
+\, d\theta.
+\end{equation}
+
+For the special case of a symmetric random walk,
+
+\begin{equation}
+p=q=\frac{1}{2},
+\end{equation}
+
+the characteristic function becomes
+
+\begin{equation}
+\lambda(\theta)
+=
+\frac{e^{i\theta}+e^{-i\theta}}{2}
+=
+\cos\theta.
+\end{equation}
+
+The probability distribution then reduces to
+
+\begin{equation}
+P_n(j)
+=
+\frac{1}{2\pi}
+\int_{-\pi}^{\pi}
+(\cos\theta)^n
+e^{-ij\theta}
+\, d\theta.
+\end{equation}
+
+Using Fourier analysis, the probability distribution can also be written in the form
+
+\begin{equation}
+P_n(j)
+=
+\frac{1}{2^{n+1}}
+\left[
+1+(-1)^{n+j}
+\right]
+\frac{n!}{
+\left(
+\frac{n+j}{2}
+\right)!
+\left(
+\frac{n-j}{2}
+\right)!
+}.
+\end{equation}
+
+As the number of steps becomes large\cite{klafter2011}, the distribution approaches a Gaussian form due to the central limit theorem. Using Stirling's approximation,
+
+\begin{equation}
+n! \approx \sqrt{2\pi n}\left(\frac{n}{e}\right)^n,
+\end{equation}
+
+the probability distribution asymptotically approaches
+
+\begin{equation}
+P_n(j)
+\approx
+\frac{1}{\sqrt{2\pi n}}
+\exp\left(
+-\frac{j^2}{2n}
+\right),
+\end{equation}
+
+which represents the Gaussian diffusion kernel associated with normal diffusion.
+
+\subsection{Diffusion Equation}
+
+The diffusion equation describes the macroscopic behavior of a random walk\cite{klafter2011,mcb111_diffusion} when both space and time become continuous variables. Starting from the discrete evolution equation for a symmetric random walk,
+Following the standard continuum-limit derivation of diffusion from a symmetric random walk
+\cite{klafter2011,mcb111_diffusion},
+
+\begin{equation}
+P_{N+1}(m)
+=
+\frac{1}{2}P_N(m-1)
++
+\frac{1}{2}P_N(m+1),
+\end{equation}
+
+subtracting $P_N(m)$ from both sides gives
+
+\begin{equation}
+P_{N+1}(m)-P_N(m)
+=
+\frac{1}{2}
+\left[
+P_N(m-1)+P_N(m+1)-2P_N(m)
+\right].
+\end{equation}
+
+Introducing continuous variables,
+
+\begin{equation}
+x=m\delta,
+\qquad
+t=N\tau,
+\end{equation}
+
+where $\delta$ is the lattice spacing and $\tau$ is the time interval between successive steps, we define
+
+\begin{equation}
+P(x,t)=P_N(m).
+\end{equation}
+
+Here, $m$ and $j$ denote discrete lattice positions, while $x$ represents the corresponding continuous spatial variable.
+
+Using the definitions of derivatives,
+
+\begin{equation}
+\frac{\partial P(x,t)}{\partial t}
+=
+\lim_{\tau\to0}
+\frac{
+P(x,t+\tau)-P(x,t)
+}{\tau},
+\end{equation}
+
+and
+
+\begin{equation}
+\frac{\partial^2 P(x,t)}{\partial x^2}
+=
+\lim_{\delta\to0}
+\frac{
+P(x-\delta,t)+P(x+\delta,t)-2P(x,t)
+}{\delta^2},
+\end{equation}
+
+the continuum limit $\delta,\tau \to 0$ transforms the discrete random walk equation into
+
+\begin{equation}
+\tau
+\frac{\partial P}{\partial t}
+=
+\frac{1}{2}
+\delta^2
+\frac{\partial^2 P}{\partial x^2}.
+\end{equation}
+
+Dividing by $\tau$ gives
+
+\begin{equation}
+\frac{\partial P}{\partial t}
+=
+\frac{\delta^2}{2\tau}
+\frac{\partial^2 P}{\partial x^2}.
+\end{equation}
+
+Defining the diffusion coefficient as
+
+\begin{equation}
+D=\frac{\delta^2}{2\tau},
+\end{equation}
+
+the diffusion equation is obtained,
+
+\begin{equation}
+\frac{\partial P}{\partial t}
+=
+D
+\frac{\partial^2 P}{\partial x^2}.
+\end{equation}
+
+The diffusion equation describes how the probability density spreads with time as a consequence of microscopic stochastic motion. One of the defining signatures of diffusive motion is the linear growth of the mean squared displacement\cite{klafter2011},
+
+\begin{equation}
+\langle x^2(t)\rangle = 2Dt,
+\end{equation}
+
+which characterizes normal diffusion.
+
+In many active matter systems, the mean squared displacement does not always grow linearly with time. Instead, the dynamics may exhibit anomalous diffusion characterized by the generalized scaling relation\cite{balakrishnan2021}
+
+\begin{equation}
+\langle r^2(t)\rangle \propto t^\alpha,
+\end{equation}
+
+where $\alpha$ is the diffusion exponent. For $\alpha = 1$, the motion corresponds to normal diffusion, while $\alpha < 1$ and $\alpha > 1$ correspond to subdiffusive and superdiffusive behavior, respectively. The limiting case $\alpha = 2$ describes ballistic motion. Such anomalous transport behavior is commonly observed in active matter systems due to persistence, correlations, and memory effects\cite{balakrishnan2021,vrugt2025}.
+
+While classical random walk models successfully describe normal diffusion processes, many active matter systems exhibit correlations and memory-dependent dynamics that cannot be fully captured within the framework of Markovian diffusion. In chemically active droplets, interactions with self-generated chemical gradients can lead to persistent and self-repelling motion, giving rise to anomalous transport behavior. Understanding such stochastic dynamics therefore requires extensions beyond classical diffusion models.
+
+% Motivation
+\section{Motivation}
+Active droplets exhibit complex stochastic motion arising from the interplay between self-propulsion, chemical interactions, and environmental feedback\cite{izzet2020,hokmabad2022}. Unlike classical Brownian particles, chemically active droplets can modify their surrounding medium through self-generated chemical gradients, leading to persistent motion, memory effects, and self-repelling dynamics\cite{hokmabad2022,droplet2025}. Such behavior cannot always be fully described within the framework of classical Markovian diffusion models.
+
+Recent studies have shown that self-repelling random walk models\cite{droplet2025} provide an effective framework for understanding the evolving motility and anomalous transport behavior observed in active droplets. In particular, the work presented in \textit{Evolving Motility of Active Droplets Is Captured by a Self-Repelling Random Walk Model}\cite{droplet2025} demonstrates how memory-dependent stochastic processes can reproduce experimentally observed droplet trajectories.
+
+Motivated by these developments, the present work aims to investigate the stochastic dynamics of chemically active droplets through trajectory extraction and statistical analysis. The study further seeks to reproduce and analyze the self-avoiding behavior of active droplets using concepts from random walk theory and nonequilibrium statistical physics.
+
+
+
+% Objectives of the Thesis
+\section{Objectives of the Thesis}
+
+The main objectives of this thesis are:
+
+\begin{itemize}
+
+\item To study the stochastic dynamics and transport properties of chemically active droplets in nonequilibrium environments.
+
+\item To extract and analyse droplet trajectories from experimental video recordings using computer-vision and particle-tracking techniques.
+
+\item To characterize droplet motion using statistical observables such as the mean-squared displacement (MSD), local MSD exponent, velocity autocorrelation function (VACF), orientation correlation function.
+
+\item To investigate the transition between persistent and diffusive motion through the analysis of correlation functions and transport observables.
+
+\item To identify signatures of memory and non-Markovian behaviour in experimentally observed droplet trajectories.
+
+\item To study theoretical descriptions of memory-dependent active matter, including self-repelling random-walk models and generalized Langevin formulations.
+
+\item To use concepts from stochastic processes, random walks, and non-Markovian dynamics to interpret the experimentally observed droplet behaviour, drawing inspiration from recent self-repelling random-walk models of active droplets \cite{droplet2025}.
+
+\item To compare experimental observations with theoretical predictions and physical insights obtained from models of active droplet motion.
+
+\item To develop a reproducible computational framework for trajectory extraction, visualization, and statistical analysis of active-droplet dynamics.
+
+\end{itemize}

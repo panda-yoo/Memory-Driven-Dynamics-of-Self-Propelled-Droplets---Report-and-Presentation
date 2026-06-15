@@ -1,0 +1,357 @@
+\section{Methodology}
+
+
+%================================================
+% \begin{frame}{Methodology Overview}
+
+% 	\centering
+
+% 	\begin{tikzpicture}[
+% 			node distance=0.4cm,
+% 			every node/.style={
+% 					draw,
+% 					rounded corners,
+% 					align=center,
+% 					minimum width=3.8cm,
+% 					minimum height=0.8cm
+% 				},
+% 			>=Stealth
+% 		]
+
+% 		%-----------------------------------
+% 		% Experimental branch
+
+% 		\node (video)
+% 		at (-4,0)
+% 		{Experimental Videos};
+
+% 		\node (track)
+% 		at (-4,-1.5)
+% 		{Detection \& Tracking};
+
+% 		\node (traj)
+% 		at (-4,-3)
+% 		{Droplet Trajectories};
+
+% 		%-----------------------------------
+% 		% Model branch
+
+% 		\node (model)
+% 		at (4,0)
+% 		[fill=red!10,draw=red!70!black]
+% 		{Memory-Driven Model};
+
+% 		\node (pde)
+% 		at (4,-1.5)
+% 		{PDE--SDE Formulation};
+
+% 		\node (sim)
+% 		at (4,-3)
+% 		{Numerical Simulation};
+
+% 		%-----------------------------------
+% 		% Comparison
+
+% 		\node (compare)
+% 		at (0,-4.8)
+% 		[fill=red!15,draw=red!70!black]
+% 		{Experiment--Simulation Comparison};
+
+% 		%-----------------------------------
+% 		% Arrows
+
+% 		\draw[->,thick] (video) -- (track);
+% 		\draw[->,thick] (track) -- (traj);
+
+% 		\draw[->,thick] (model) -- (pde);
+% 		\draw[->,thick] (pde) -- (sim);
+
+% 		\draw[->,thick] (traj) -- (compare);
+% 		\draw[->,thick] (sim) -- (compare);
+
+% 	\end{tikzpicture}
+% \end{frame}
+%================================================
+\begin{frame}{Experimental System}
+
+	\begin{columns}
+
+		\column{0.55\textwidth}
+
+		\begin{itemize}
+			\item Self-propelled Belousov--Zhabotinsky (BZ) droplets in a monoolein--squalane oil medium.
+			\item Droplet diameter: $\approx 1.75\,\mathrm{mm}$.
+			\item Videos recorded using a CMOS camera at 5 fps.
+			\item Spatial resolution: $0.06\,\mathrm{mm}$ per pixel.
+
+		\end{itemize}
+
+		\column{0.45\textwidth}
+
+		\centering
+
+		% Replace with experimental setup image
+		\includegraphics[height=0.58\textheight]{camera_setup_image.png}
+
+		\vspace{0.2cm}
+		{\scriptsize Experimental setup for recording active droplet trajectories. Adapted from Meshram and Shajahan (2026).\par}
+	\end{columns}
+	\rightcite{D5SM01187F}
+
+\end{frame}
+
+%================================================
+%================================================
+\begin{frame}{Trajectory Extraction}
+
+	\vspace{-0.2cm}
+
+	\begin{columns}[T]
+
+		%=========================================
+		\column{0.48\textwidth}
+
+		\begin{block}{YOLOv8 Detection and Tracking}
+
+			\small
+
+			\begin{itemize}
+				\item Detect droplets in each frame.
+				\item Assign persistent tracking IDs.
+				\item Link detections across frames.
+				\item Extract centroid coordinates.
+				\item Reconstruct droplet trajectories.
+			\end{itemize}
+
+			\vspace{0.15cm}
+
+			{\footnotesize
+				Transfer learning using YOLOv8
+				(369 training images, 96 validation images,
+				50 epochs, resolution $640\times640$).
+			}
+
+		\end{block}
+
+		\vspace{0.15cm}
+
+		%=========================================
+		\column{0.52\textwidth}
+
+		\centering
+
+		\includegraphics[height=0.55\textheight]{yolo_tracking_example.png}
+
+		\vspace{0.1cm}
+
+		{\tiny
+			\begin{minipage}{0.9\linewidth}
+				\centering
+				YOLOv8 detection and tracking output.\\
+				Bounding boxes and persistent tracking IDs\\
+				enable trajectory reconstruction across video frames.
+			\end{minipage}
+		}
+	\end{columns}
+
+	\begin{alertblock}{Output}
+
+		Tracked droplet trajectories used for
+		transport and memory analysis.
+
+	\end{alertblock}
+\end{frame}
+%================================================
+\begin{frame}{From Trajectories to Memory Measures}
+
+	\centering
+
+	\begin{tikzpicture}[
+			node distance=0.6cm,
+			every node/.style={
+					draw,
+					rounded corners,
+					align=center,
+					minimum width=3cm,
+					minimum height=1cm
+				},
+			> =Stealth
+		]
+
+		\node (traj) {Trajectory Data};
+
+		\node (msd) [right=of traj]
+		{MSD};
+
+		\node (vacf) [right=of msd]
+		{VACF};
+
+		\node (memory) [right=of vacf,
+			fill=red!15,
+			draw=red!70!black]
+		{Memory};
+
+		\draw[->,thick] (traj) -- (msd);
+		\draw[->,thick] (msd) -- (vacf);
+		\draw[->,thick] (vacf) -- (memory);
+
+	\end{tikzpicture}
+
+	\vspace{0.6cm}
+
+	\begin{columns}
+
+		\column{0.4\textwidth}
+
+		\begin{block}{Transport Measures}
+			\begin{itemize}
+				\item Mean Squared Displacement (MSD)
+				\item Local MSD Exponent
+			\end{itemize}
+		\end{block}
+
+		\column{0.4\textwidth}
+
+		\begin{alertblock}{Memory Measures}
+			\begin{itemize}
+				\item Velocity Autocorrelation Function (VACF)
+				\item Orientation Correlation Function (OCF)
+			\end{itemize}
+		\end{alertblock}
+
+	\end{columns}
+
+\end{frame}
+\begin{frame}{Transport Characterization}
+
+	\begin{columns}[T]
+
+		%----------------------------------
+		\column{0.48\textwidth}
+
+		\begin{block}{Mean Squared Displacement (MSD)}
+
+			\vspace{-0.05cm}
+
+			\[
+				\mathrm{MSD}(\tau)
+				=
+				\left\langle
+				\|\mathbf{X}(t+\tau)-\mathbf{X}(t)\|^2
+				\right\rangle
+			\]
+
+		\end{block}
+
+		\begin{itemize}
+			\item Measures spatial exploration.
+			\item Identifies ballistic, diffusive, and anomalous transport.
+			\item Used to estimate transport behavior.
+		\end{itemize}
+
+		%----------------------------------
+		\column{0.48\textwidth}
+
+		\begin{block}{Local MSD Exponent}
+
+			\vspace{-0.05cm}
+
+			\[
+				\alpha(\tau)
+				=
+				\frac{d\log[\mathrm{MSD}(\tau)]}
+				{d\log(\tau)}
+			\]
+
+		\end{block}
+
+		\begin{itemize}
+			\item Characterizes lag-dependent transport.
+			\item $\alpha \approx 2$ : Ballistic motion
+			\item $\alpha \approx 1$ : Normal diffusion
+			\item $1<\alpha<2$ : Superdiffusion
+		\end{itemize}
+
+	\end{columns}
+
+	\vspace{0.2cm}
+
+	\begin{alertblock}{Physical Interpretation}
+		MSD quantifies how far droplets travel, while the local exponent reveals how the transport regime evolves across timescales.
+	\end{alertblock}
+
+\end{frame}
+\begin{frame}{Memory Characterization}
+
+	\begin{columns}[T]
+
+		%----------------------------------
+		\column{0.4\textwidth}
+		\vspace{-0.2cm}
+
+		\begin{alertblock}{Velocity Autocorrelation Function (VACF)}
+
+			\[
+				C_v(\tau)
+				=
+				\frac{
+					\left\langle
+					\mathbf{v}(t)\cdot\mathbf{v}(t+\tau)
+					\right\rangle}
+				{
+					\left\langle
+					|\mathbf{v}(t)|^2
+					\right\rangle}
+			\]
+		\end{alertblock}
+
+		\vspace{0.05cm}
+
+		\[
+			C_v(\tau)\sim e^{-\tau/\tau_p}
+		\]
+
+		\begin{itemize}
+			\item Measures velocity memory.
+			\item Provides persistence time $\tau_p$.
+		\end{itemize}
+
+		%----------------------------------
+		\column{0.4\textwidth}
+		\vspace{-0.2cm}
+
+		\begin{alertblock}{Orientation Correlation Function (OCF)}
+			\vspace{-0.2cm}
+
+			\[
+				C_\theta(\tau)
+				=
+				\left\langle
+				\cos[\theta(t+\tau)-\theta(t)]
+				\right\rangle
+			\]
+			% \vspace{0.00005cm}
+			% \vspace{-0.1cm}
+
+		\end{alertblock}
+
+		\vspace{0.05cm}
+
+		\[
+			C_\theta(\tau)\sim e^{-\tau/\tau_r}
+		\]
+
+		\begin{itemize}
+			\item Measures directional memory.
+			\item Provides rotational persistence time $\tau_r$.
+		\end{itemize}
+
+	\end{columns}
+
+	\vspace{0.3cm}
+
+	\begin{alertblock}{Physical Meaning}
+		These observables quantify how long information about past velocity and direction persists.
+	\end{alertblock}
+
+\end{frame}

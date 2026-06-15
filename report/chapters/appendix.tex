@@ -1,0 +1,307 @@
+\appendix
+
+%====================================================
+\chapter{YOLOv8 Detection and Tracking}
+\label{app:yolo_parameters}
+
+This appendix summarizes the object detection and tracking framework used for droplet trajectory extraction.
+
+\section{Detection and Tracking}
+
+Droplets were detected using a custom-trained YOLOv8 model. Persistent ID-based tracking was employed to maintain droplet identities across consecutive video frames and to reconstruct individual trajectories.
+
+For each detected droplet, the centre of the predicted bounding box was used as the particle position for subsequent trajectory analysis.
+
+During inference, a confidence threshold of 0.25 and an IoU threshold of 0.45 were used.
+
+\section{Model Training}
+
+The detector was trained using transfer learning based on the pretrained \texttt{yolov8m.pt} model.
+
+The training dataset consisted of 369 training images and 96 validation images. Training was performed for 50 epochs using a batch size of 16 and an input image resolution of \(640\times640\).
+
+Standard data augmentation techniques provided by the Ultralytics framework were applied during training to improve robustness against variations in droplet appearance and imaging conditions.
+
+\section{Detection Performance}
+
+The final trained detector achieved the following validation metrics:
+
+\begin{itemize}
+    \item Precision: \(1.00\)
+    \item Recall: \(1.00\)
+    \item mAP@50: \(0.995\)
+    \item mAP@50--95: \(0.824\)
+\end{itemize}
+
+These results indicate reliable droplet localization and tracking under the experimental imaging conditions. The extracted trajectories formed the basis of the statistical analyses presented in Chapters~3 and~4.
+%====================================================
+\chapter{Mathematical Derivations}
+\label{app:math_derivations}
+
+%----------------------------------------------------
+\section{Derivation of the Weak Form of the PDE}
+
+Starting from the concentration equation
+\begin{equation}
+\frac{\partial c}{\partial t}
+=
+D \nabla^2 c
++
+\alpha_t G_{R_t}(\mathbf{x}-\mathbf{X}_t),
+\end{equation}
+we multiply by a test function \(v \in H^1(\Omega)\) and integrate over the domain \(\Omega\):
+\begin{equation}
+\int_{\Omega}
+\frac{\partial c}{\partial t}v\,d\mathbf{x}
+=
+D\int_{\Omega}
+\nabla^2 c\,v\,d\mathbf{x}
++
+\int_{\Omega}
+\alpha_t
+G_{R_t}(\mathbf{x}-\mathbf{X}_t)
+v\,d\mathbf{x}.
+\end{equation}
+
+Applying integration by parts to the diffusion term gives
+\begin{equation}
+\int_{\Omega}
+\nabla^2 c\,v\,d\mathbf{x}
+=
+-\int_{\Omega}
+\nabla c\cdot\nabla v\,d\mathbf{x}
++
+\int_{\partial\Omega}
+\frac{\partial c}{\partial n}v\,ds.
+\end{equation}
+
+Using the no-flux boundary condition
+\begin{equation}
+\frac{\partial c}{\partial n}=0
+\qquad
+\text{on }\partial\Omega,
+\end{equation}
+the boundary contribution vanishes.
+
+The weak form therefore becomes
+\begin{equation}
+\int_{\Omega}
+\frac{\partial c}{\partial t}v\,d\mathbf{x}
++
+D\int_{\Omega}
+\nabla c\cdot\nabla v\,d\mathbf{x}
+=
+\int_{\Omega}
+\alpha_t
+G_{R_t}(\mathbf{x}-\mathbf{X}_t)
+v\,d\mathbf{x}.
+\end{equation}
+
+%----------------------------------------------------
+\section{Finite Element Discretization of the PDE}
+
+Let \(V_h \subset H^1(\Omega)\) be a finite element space with basis functions
+\begin{equation}
+\{\phi_i\}_{i=1}^{N}.
+\end{equation}
+
+The approximate solution is expanded as
+\begin{equation}
+c_h(\mathbf{x},t)
+=
+\sum_{j=1}^{N}
+C_j(t)\phi_j(\mathbf{x}).
+\end{equation}
+
+Substituting into the weak form and choosing \(v=\phi_i\) gives
+\begin{equation}
+\sum_{j=1}^{N}
+M_{ij}\dot{C}_j(t)
++
+D\sum_{j=1}^{N}
+K_{ij}C_j(t)
+=
+F_i(t),
+\end{equation}
+where
+\begin{align}
+M_{ij}
+&=
+\int_{\Omega}
+\phi_j\phi_i\,d\mathbf{x},
+\\
+K_{ij}
+&=
+\int_{\Omega}
+\nabla\phi_j\cdot\nabla\phi_i\,d\mathbf{x},
+\\
+F_i(t)
+&=
+\int_{\Omega}
+\alpha_t
+G_{R_t}(\mathbf{x}-\mathbf{X}_t)
+\phi_i\,d\mathbf{x}.
+\end{align}
+
+Using backward Euler time discretization,
+\begin{equation}
+\left(M+\Delta t\,DK\right)\mathbf{C}^{n+1}
+=
+M\mathbf{C}^{n}
++
+\Delta t\,\mathbf{F}^{n+1}.
+\end{equation}
+
+%----------------------------------------------------
+\section{Derivation of the Stochastic Differential Equation Form}
+
+The droplet equation is written as
+\begin{equation}
+\gamma_t \dot{\mathbf{X}}_t
+=
+-\beta \frac{R_t^3}{\delta^3}
+\int_{\Omega}
+G_{R_t}(\mathbf{x}-\mathbf{X}_t)
+\nabla c_t(\mathbf{x})\,d\mathbf{x}
++
+\sqrt{\sigma}\,\xi_t.
+\end{equation}
+
+Dividing by \(\gamma_t\) gives
+\begin{equation}
+\dot{\mathbf{X}}_t
+=
+-\frac{\beta R_t^3}{\gamma_t\delta^3}
+\int_{\Omega}
+G_{R_t}(\mathbf{x}-\mathbf{X}_t)
+\nabla c_t(\mathbf{x})\,d\mathbf{x}
++
+\frac{\sqrt{\sigma}}{\gamma_t}\xi_t.
+\end{equation}
+
+Defining the drift term
+\begin{equation}
+\mathbf{A}(\mathbf{X}_t,t)
+=
+-\frac{\beta R_t^3}{\gamma_t\delta^3}
+\int_{\Omega}
+G_{R_t}(\mathbf{x}-\mathbf{X}_t)
+\nabla c_t(\mathbf{x})\,d\mathbf{x},
+\end{equation}
+the stochastic differential equation becomes
+\begin{equation}
+d\mathbf{X}_t
+=
+\mathbf{A}(\mathbf{X}_t,t)\,dt
++
+\frac{\sqrt{\sigma}}{\gamma_t}\,d\mathbf{W}_t,
+\end{equation}
+where \(\mathbf{W}_t\) is a Wiener process.
+
+%----------------------------------------------------
+\section{Euler--Maruyama Discretization of the SDE}
+
+Integrating over one time step \([t_n,t_{n+1}]\),
+\begin{equation}
+\mathbf{X}^{n+1}-\mathbf{X}^{n}
+=
+\int_{t_n}^{t_{n+1}}
+\mathbf{A}(\mathbf{X}_t,t)\,dt
++
+\frac{\sqrt{\sigma}}{\gamma_t}
+\left(
+\mathbf{W}_{t_{n+1}}-\mathbf{W}_{t_n}
+\right).
+\end{equation}
+
+Approximating the drift term using its value at \(t_n\),
+\begin{equation}
+\int_{t_n}^{t_{n+1}}
+\mathbf{A}(\mathbf{X}_t,t)\,dt
+\approx
+\mathbf{A}(\mathbf{X}^{n},t_n)\Delta t,
+\end{equation}
+and using
+\begin{equation}
+\mathbf{W}_{t_{n+1}}-\mathbf{W}_{t_n}
+\sim
+\mathcal{N}(\mathbf{0},\Delta t\,I),
+\end{equation}
+gives the Euler--Maruyama update:
+\begin{equation}
+\mathbf{X}^{n+1}
+=
+\mathbf{X}^{n}
++
+\mathbf{A}(\mathbf{X}^{n},t_n)\Delta t
++
+\frac{\sqrt{\sigma}}{\gamma_t}
+\sqrt{\Delta t}\,\boldsymbol{\eta}^{n},
+\end{equation}
+where
+\begin{equation}
+\boldsymbol{\eta}^{n}
+\sim
+\mathcal{N}(\mathbf{0},I).
+\end{equation}
+
+%----------------------------------------------------
+\section{Derivation of the Mean Squared Displacement}
+
+For a trajectory \(\mathbf{X}(t)\), the mean squared displacement is defined as
+\begin{equation}
+\mathrm{MSD}(\tau)
+=
+\left\langle
+\left|
+\mathbf{X}(t+\tau)-\mathbf{X}(t)
+\right|^2
+\right\rangle.
+\end{equation}
+
+For discrete trajectories sampled at times \(t_n\),
+\begin{equation}
+\mathrm{MSD}(m\Delta t)
+=
+\frac{1}{N-m}
+\sum_{n=0}^{N-m-1}
+\left|
+\mathbf{X}_{n+m}-\mathbf{X}_n
+\right|^2.
+\end{equation}
+
+\chapter{Code Availability and Reproducibility}
+\label{app:code}
+
+The computational framework developed for this work consists of software for experimental trajectory extraction, statistical analysis, numerical simulation, and figure generation. Owing to the size and complexity of the codebase, it is not practical to include the full implementation within the printed thesis. Instead, the complete source code is maintained in a public version-controlled repository.
+
+\section{Repository Access}
+
+The source code associated with this thesis is available through GitHub:
+
+\begin{center}
+\url{https://github.com/panda-yoo/droplet-simulation}
+\end{center}
+
+The repository contains the implementation used for all stages of the project, including experimental data processing, trajectory analysis, numerical simulations, and visualization. Detailed documentation is provided within the repository to assist users in understanding the code structure, installation procedure, workflow, and reproduction of results.
+
+To support long-term accessibility and reproducibility, an archived release of the repository may also be deposited in Zenodo in the future, providing a permanent DOI-linked record of the software version used in this work.
+
+\section{Contents of the Repository}
+
+The repository contains:
+
+\begin{itemize}
+\item Experimental trajectory extraction and preprocessing tools.
+\item YOLOv8-based droplet detection and tracking pipelines.
+\item Statistical analysis routines for MSD, local MSD exponent, VACF, and orientation correlation calculations.
+\item PDE--SDE simulation codes for memory-driven droplet dynamics.
+\item Figure-generation and visualization scripts used throughout the thesis.
+\item Documentation, usage examples, and reproducibility instructions.
+\end{itemize}
+
+\section{Reproducibility}
+
+All principal results presented in this thesis were generated using the software available in the repository. The accompanying documentation describes the required software environment, dependencies, simulation parameters, and analysis workflow.
+
+The repository is intended to serve both as a reproducibility resource and as a foundation for future extensions of the present work. Researchers interested in memory-driven active matter, stochastic modelling, or active droplet dynamics may use the provided implementation as a reference framework for further investigations.

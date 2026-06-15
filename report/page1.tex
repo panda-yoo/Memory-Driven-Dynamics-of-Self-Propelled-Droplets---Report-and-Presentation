@@ -1,0 +1,266 @@
+\documentclass[12pt, a4paper]{report}
+
+%----------------------------------------------------------------------------------------
+%   PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{
+    top=1.5cm,
+    bottom=1.5cm,
+    left=1.5cm,
+    right=1.5cm
+}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{minted}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{tocloft}
+\usepackage{hyperref}
+\usepackage[backend=biber]{biblatex}
+
+\addbibresource{references.bib}
+
+\usemintedstyle{friendly}
+\definecolor{LightGray}{gray}{0.95}
+
+\graphicspath{{}}
+\onehalfspacing
+
+%----------------------------------------------------------------------------------------
+%   HYPERREF SETUP
+%----------------------------------------------------------------------------------------
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Simulation of self propel droplet dynamic},
+}
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%   TITLE PAGE (EXACTLY LIKE THE IMAGE - SINGLE PAGE)
+%----------------------------------------------------------------------------------------
+\begin{titlepage}
+\centering
+
+\vspace*{1.5cm}
+
+% ---------------- Title ----------------
+{\Large\bfseries
+Simulation of self propel droplet dynamic
+}
+
+\vspace{1.5cm}
+
+% ---------------- Thesis Type ----------------
+{\normalsize Master Thesis}
+
+\vspace{1.2cm}
+
+% ---------------- Submission Text ----------------
+{\normalsize
+Submitted in partial fulfillment of the requirements for the degree of
+}
+
+\vspace{0.4cm}
+
+% ---------------- Degree ----------------
+{\normalsize\bfseries
+MASTER OF SCIENCE IN PHYSICS
+}
+
+\vspace{1.2cm}
+
+% ---------------- Author ----------------
+{\normalsize by}
+
+\vspace{0.3cm}
+
+{\normalsize\bfseries
+PRANAV DEEPAK SHINDE
+}
+
+\vspace{0.2cm}
+
+{\normalsize
+246PH028
+}
+
+\vspace{1.2cm}
+
+% ---------------- Supervisor ----------------
+{\normalsize
+Under the guidance of
+}
+
+\vspace{0.3cm}
+
+{\normalsize\bfseries
+Dr.\ T.\ K.\ SHAJAHAN
+}
+
+\vspace{1.0cm}
+
+% ---------------- Logo ----------------
+\includegraphics[width=0.22\textwidth]{logo.png}
+
+\vspace{1.0cm}
+
+% ---------------- Institute ----------------
+{\normalsize\bfseries
+DEPARTMENT OF PHYSICS
+}
+
+\vspace{0.2cm}
+
+{\normalsize\bfseries
+NATIONAL INSTITUTE OF TECHNOLOGY KARNATAKA
+}
+
+\vspace{0.2cm}
+
+{\normalsize\bfseries
+SURATHKAL, MANGALORE -- 575 025
+}
+
+\vspace{1.0cm}
+
+% ---------------- Date ----------------
+{\normalsize
+JANUARY, 2025
+}
+
+\end{titlepage}
+
+%----------------------------------------------------------------------------------------
+%   DECLARATION PAGE
+%----------------------------------------------------------------------------------------
+\clearpage
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+\chapter*{Declaration}
+\addcontentsline{toc}{chapter}{Declaration}
+
+\vspace{1cm}
+
+I hereby declare that the Report of the P.G. Project Work entitled \textbf{``Simulation of self propel droplet dynamic''} which is being submitted to the National Institute of Technology Karnataka Surathkal, in partial fulfillment of the requirements for the award of the Degree of Master of Science in the Department of Physics, is a bonafide report of the work carried out by me. The material contained in this report has not been submitted to any University or Institution for the award of any degree.
+
+\vspace{3cm}
+
+\noindent
+Place: NITK, Surathkal \hfill \textbf{Pranav D Shinde} \\
+Date: \hfill (246PH028)
+
+%----------------------------------------------------------------------------------------
+%   CERTIFICATE PAGE
+%----------------------------------------------------------------------------------------
+\clearpage
+\addtocounter{page}{1}
+\clearpage
+\chapter*{Certificate}
+\addcontentsline{toc}{chapter}{Certificate}
+
+\vspace{1.2cm}
+
+\noindent
+This is to certify that the P.G. Project Work Report entitled
+\textbf{``Simulation of Fluid Dynamics using the Lattice Boltzmann Method''}
+submitted by \textbf{Pranav Deepak Shinde} (246PH028) as the record of the work
+carried out by him, is accepted as the Postgraduate Project Work Report
+submission in partial fulfillment of the requirements for the award of the
+degree of \textbf{Master of Science} in the Department of Physics.
+
+\vspace{3.5cm}
+
+\noindent
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\rule{6cm}{0.4pt}\\
+\vspace{0.3cm}
+\textbf{Chairman--DPGC}\\
+National Institute of Technology\\
+Karnataka, Surathkal.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\rule{6cm}{0.4pt}\\
+\vspace{0.3cm}
+\textbf{Dr.\ T.\ K.\ Shajahan}\\
+Department of Physics\\
+National Institute of Technology\\
+Karnataka, Surathkal.
+\end{minipage}
+
+%----------------------------------------------------------------------------------------
+%   ACKNOWLEDGEMENTS PAGE
+%----------------------------------------------------------------------------------------
+\clearpage
+\addtocounter{page}{1}
+
+\chapter*{Acknowledgements}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+
+\vspace{1cm}
+
+I would like to express my sincere gratitude to my supervisor, Dr. T. K. Shajahan, for his invaluable guidance and suggestions, which enabled me to get a clear insight into the research work related to the project and understand the concepts clearly. Furthermore, I am grateful for his guidance in providing alternative approaches whenever challenges arise.
+
+I would also like to thank all the members of the Nonlinear Dynamics Laboratory, especially Vivek Bharat Meshram, for valuable advice and constructive criticism, which motivated sustained and focused effort on this project. Finally, I express sincere gratitude to my family and friends for constant support, encouragement, and generosity throughout the course of this work.
+
+%----------------------------------------------------------------------------------------
+%   ABSTRACT
+%----------------------------------------------------------------------------------------
+\clearpage
+\addtocounter{page}{1}
+
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+\vspace{1cm}
+
+This report provides an overview of the Lattice Boltzmann Method (LBM), a powerful numerical technique for simulating fluid dynamics. Unlike traditional Computational Fluid Dynamics (CFD) methods that solve the macroscopic Navier-Stokes equations directly, LBM models the fluid at a mesoscopic level using particle distribution functions. The method has garnered considerable attention due to its ability to handle complex geometries, multiphase flows, and coupled phenomena that challenge conventional approaches.
+
+In this work, we explore the theoretical foundations of LBM, beginning with its derivation from the Boltzmann equation and proceeding through the discretization process that yields the lattice Boltzmann equation. We discuss the Bhatnagar-Gross-Krook (BGK) collision operator, which simplifies the collision dynamics through a single relaxation time approximation, and detail the implementation of the standard D2Q9 lattice model for two-dimensional flows. The equilibrium distribution function, derived from a second-order expansion of the Maxwell-Boltzmann distribution, is presented along with the relationships connecting relaxation parameters to physical viscosity.
+
+To validate the feasibility of this approach, we developed a series of computational implementations in both Python and C++. The Python implementation demonstrates a basic diffusion process, serving as a fundamental test case for verifying mass conservation and isotropy. For more complex flow simulations, we employ the Palabos library—a robust open-source framework specifically designed for lattice Boltzmann computations. Using Palabos, we simulate incompressible channel flow past rectangular obstacles, implementing appropriate boundary conditions including bounce-back for solid walls, velocity inlet conditions using the Zou-He scheme, and pressure outlet conditions.
+
+The key advantage of LBM in computational fluid dynamics lies in its local collision-streaming algorithm, which naturally lends itself to parallel computing architectures. The method's ability to handle complex geometries through simple bounce-back boundary conditions, combined with its explicit time-marching scheme, makes it particularly attractive for simulations involving intricate flow domains. The validation cases presented in this report—2D diffusion and channel flow with obstacles—demonstrate the method's accuracy and robustness for fundamental flow problems.
+
+The diffusion simulation confirms proper implementation of the collision-streaming algorithm, with the Gaussian pulse evolving symmetrically and maintaining mass conservation throughout the simulation. The channel flow case, operating at a low Reynolds number ($Re \approx 0.72$), exhibits the expected viscous-dominated laminar behavior with clear flow acceleration in constricted regions and proper attachment to obstacle surfaces without separation.
+
+This work serves as a foundation for exploring advanced applications of LBM, including active matter systems such as self-propelled droplets driven by the Belousov-Zhabotinsky reaction, reactive multiphase flows, and chemically-driven microfluidic phenomena. Future research will focus on extending these implementations to incorporate multiple phases, chemical species transport, and interfacial dynamics, ultimately enabling the simulation of complex coupled phenomena in biological and chemical systems.
+
+%----------------------------------------------------------------------------------------
+%   TABLE OF CONTENTS
+%----------------------------------------------------------------------------------------
+\clearpage
+\addtocounter{page}{1}
+
+\tableofcontents
+
+\newpage
+\setcounter{page}{1}
+
+
+\chapter{Introduction}
+\section{Pearson's random walk}
+\begin{equation}
+P_n(j) = \frac{1}{2\pi} \int_{-\pi}^{\pi} (pe^{i\theta} + qe^{-i\theta})^n e^{-i\theta j} d\theta
+\end{equation}
+
+\section{The Lattice Boltzmann Equation}
+\printbibliography
+\end{document}

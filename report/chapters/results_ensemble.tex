@@ -1,0 +1,438 @@
+\section{Experimental Ensemble Dynamics}
+
+The retained trajectories were treated as discrete time series sampled at fixed time intervals. Ensemble-averaged transport quantities were obtained by first computing the statistical observables described in Chapter~3 for each trajectory and then averaging over all retained droplets within a given experiment.
+
+The mean-squared displacement (MSD) was calculated as described in Section~3.2.4 using lag times up to approximately 40\% of the trajectory length to ensure reliable statistics at large $\tau$. The scaling exponent $\alpha$ was estimated from a power-law fit,
+\begin{equation}
+\mathrm{MSD}(\tau)\propto\tau^{\alpha},
+\end{equation}
+performed over the first 30\% of the available lag-time range. Linear regression on the log--log transformed MSD data was carried out using the \texttt{statsmodels.api} package, providing estimates of the fit parameters, uncertainties, and coefficient of determination ($R^2$).
+The local MSD exponent, VACF, and orientation correlation function were computed according to Sections~3.2.5--3.2.7. Exponential fits to the correlation functions over an initial lag-time window yielded estimates of the translational and rotational persistence times, $\tau_p$ and $\tau_r$, respectively.
+
+%=========================================================
+\subsection{Trajectory Statistics}
+%=========================================================
+
+The retained sample sizes are $N=4$ (Experiment~2.1), $N=6$ (Experiment~2.2),
+$N=6$ (Experiment~2.3), $N=3$ (Experiment~2.4), and $N=4$ (2\&4~$\mu$L).
+
+Figure~\ref{fig:ensemble_trajectories} shows the ensemble trajectories for all experiments. The trajectories span a substantial fraction of the field of view in all datasets, indicating that the droplets explore the available domain rather than remaining localized near their initial positions. Although individual trajectories exhibit noticeable variability in shape, curvature, and spatial extent, ensemble averaging reveals systematic transport behaviour that is less sensitive to fluctuations in single trajectories.
+
+Persistent motion is visible in the extended excursions and long trajectory segments observed across the datasets. However, the degree of persistence varies between experiments, suggesting differences in the underlying transport dynamics.
+
+%====================================================
+% Figure 1 : Individual Experiments
+%====================================================
+
+\begin{figure}[!p]
+\centering
+
+%---------------- Row 1 ----------------%
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2.1_droplets_trajectories.png}
+\caption{Experiment~2.1}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2.2_droplets_trajectories.png}
+\caption{Experiment~2.2}
+\end{subfigure}
+
+\vspace{0.5em}
+
+%---------------- Row 2 ----------------%
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2.3_droplets_trajectories.png}
+\caption{Experiment~2.3}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2.4_droplets_trajectories.png}
+\caption{Experiment~2.4}
+\end{subfigure}
+
+\caption{
+Ensemble trajectories for the four experimental datasets.
+Each trajectory corresponds to a tracked droplet and illustrates
+the diversity of motility patterns observed across experiments.
+}
+\label{fig:ensemble_trajectories}
+\end{figure}
+
+
+%====================================================
+% Figure 2 : Combined Dataset
+%====================================================
+
+\begin{figure}[!p]
+\centering
+
+\includegraphics[width=0.75\textwidth]{plots_for_2&4ul_droplets_trajectories.png}
+
+\caption{
+Ensemble trajectories for the combined 2\&4 $\mu$L dataset.
+Combining trajectories from multiple experiments increases the
+statistical sampling and provides a broader view of the overall
+droplet dynamics.
+}
+\label{fig:combined_trajectories}
+
+\end{figure}
+
+
+%=========================================================
+\subsection{Mean-Squared Displacement}
+%=========================================================
+
+Figure~\ref{fig:ensemble_msd} shows the ensemble mean-squared displacement curves together with power-law fits. The fitting procedure described in Section~3.2 was applied to obtain the transport exponent $\alpha$.
+
+The fitted exponents are
+
+\begin{itemize}
+\item Experiment~2.1: $\alpha = 1.8345 \pm 0.0019$
+\item Experiment~2.2: $\alpha = 1.6482 \pm 0.0053$
+\item Experiment~2.3: $\alpha = 1.8776 \pm 0.0012$
+\item Experiment~2.4: $\alpha = 1.7025 \pm 0.0049$
+\item 2\&4 $\mu$L: $\alpha = 1.5592 \pm 0.0066$
+\end{itemize}
+
+All measured exponents satisfy $1 < \alpha < 2$, indicating superdiffusive transport. These values suggest that the droplet motion cannot be described as ordinary diffusion and instead exhibits persistent dynamics over a broad range of lag times.
+
+Experiment~2.3 exhibits the largest exponent, indicating the strongest persistence among the investigated datasets. In contrast, the combined 2\&4 $\mu$L dataset exhibits the lowest exponent, consistent with weaker persistence and faster decorrelation.
+
+% \begin{figure}[H]
+% \centering
+
+% \begin{subfigure}{0.48\textwidth}
+% \centering
+% \includegraphics[width=\textwidth]{plots_for_2.1_droplets_loglog_msd.png}
+% \caption{Experiment~2.1}
+% \end{subfigure}
+% \hfill
+% \begin{subfigure}{0.48\textwidth}
+% \centering
+% \includegraphics[width=\textwidth]{plots_for_2.2_droplets_loglog_msd.png}
+% \caption{Experiment~2.2}
+% \end{subfigure}
+
+% \vspace{0.5em}
+
+% \begin{subfigure}{0.48\textwidth}
+% \centering
+% \includegraphics[width=\textwidth]{plots_for_2.3_droplets_loglog_msd.png}
+% \caption{Experiment~2.3}
+% \end{subfigure}
+% \hfill
+% \begin{subfigure}{0.48\textwidth}
+% \centering
+% \includegraphics[width=\textwidth]{plots_for_2.4_droplets_loglog_msd.png}
+% \caption{Experiment~2.4}
+% \end{subfigure}
+
+% \vspace{0.5em}
+
+% \begin{subfigure}{0.60\textwidth}
+% \centering
+% \includegraphics[width=\textwidth]{plots_for_2&4ul_droplets_loglog_msd.png}
+% \caption{Combined 2\&4 $\mu$L dataset}
+% \end{subfigure}
+
+% \caption{Ensemble MSD curves and power-law fits.}
+% \label{fig:ensemble_msd}
+% \end{figure}
+
+\begin{figure}[p]
+\centering
+
+% Row 1
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2.1_droplets_loglog_msd.png}
+\caption{Experiment 2.1}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2.2_droplets_loglog_msd.png}
+\caption{Experiment 2.2}
+\end{subfigure}
+
+\vspace{0.5em}
+
+% Row 2
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2.3_droplets_loglog_msd.png}
+\caption{Experiment 2.3}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2.4_droplets_loglog_msd.png}
+\caption{Experiment 2.4}
+\end{subfigure}
+
+\vspace{0.5em}
+
+% Row 3
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2&4ul_droplets_loglog_msd.png}
+\caption{Combined 2\&4 $\mu$L dataset}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\phantom{\includegraphics[width=\linewidth]{plots_for_2.1_droplets_loglog_msd.png}}
+\end{subfigure}
+
+\caption{Ensemble mean-squared displacement (MSD) curves and corresponding power-law fits for the individual experiments and the combined dataset.}
+\label{fig:ensemble_msd}
+\end{figure}
+
+
+%=========================================================
+\subsection{Local MSD Exponent}
+%=========================================================
+
+The local MSD exponent provides a lag-dependent measure of the transport dynamics and reveals deviations from a single power-law description. Figure~\ref{fig:ensemble_alpha} shows the evolution of $\alpha(\tau)$ for all datasets.
+
+At short lag times, the local exponent approaches the ballistic limit $\alpha \approx 2$, indicating strong directional persistence immediately after trajectory onset. As the lag time increases, the exponent decreases gradually and approaches values consistent with the global MSD exponents obtained from the power-law fits.
+
+The absence of an abrupt transition suggests that the droplets undergo a gradual crossover from strongly persistent motion to a regime with weaker temporal correlations. The combined 2\&4 $\mu$L dataset consistently exhibits the lowest long-time values of $\alpha(\tau)$, supporting the interpretation of reduced persistence under those conditions.
+
+\begin{figure}[!p]
+\centering
+
+%---------------- Row 1 ----------------%
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2.1_droplets_alpha_vs_tau.png}
+\caption{Experiment~2.1}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2.2_droplets_alpha_vs_tau.png}
+\caption{Experiment~2.2}
+\end{subfigure}
+
+\vspace{0.5em}
+
+%---------------- Row 2 ----------------%
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2.3_droplets_alpha_vs_tau.png}
+\caption{Experiment~2.3}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2.4_droplets_alpha_vs_tau.png}
+\caption{Experiment~2.4}
+\end{subfigure}
+
+\vspace{0.5em}
+
+%---------------- Row 3 ----------------%
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2&4ul_droplets_alpha_vs_tau.png}
+\caption{Combined 2\&4 $\mu$L dataset}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\phantom{\includegraphics[width=\linewidth]{plots_for_2.1_droplets_alpha_vs_tau.png}}
+\end{subfigure}
+
+\caption{
+Lag-dependent local MSD exponent $\alpha(\tau)$ for the individual
+experiments and the combined dataset.
+}
+\label{fig:ensemble_alpha}
+\end{figure}
+
+
+%=========================================================
+\subsection{Velocity Autocorrelation Function}
+%=========================================================
+
+The velocity autocorrelation function (VACF) quantifies the persistence of the droplet velocity and provides a direct measure of temporal correlations in the motion. Figure~\ref{fig:ensemble_vacf} shows the ensemble-averaged VACF for all experimental datasets together with exponential fits used to estimate the persistence time $\tau_p$.
+
+The extracted persistence times are
+
+\begin{itemize}
+\item Experiment~2.1: $\tau_p = 61.83 \pm 0.36~\mathrm{s}$
+\item Experiment~2.2: $\tau_p = 17.14 \pm 0.56~\mathrm{s}$
+\item Experiment~2.3: $\tau_p = 125.25 \pm 1.09~\mathrm{s}$
+\item Experiment~2.4: $\tau_p = 28.40 \pm 0.22~\mathrm{s}$
+\item 2\&4 $\mu$L: $\tau_p = 14.32 \pm 0.16~\mathrm{s}$
+\end{itemize}
+
+The correlation functions exhibit a gradual decay with increasing lag time\cite{balakrishnan2021}, indicating the presence of persistent motion rather than memoryless diffusion. Experiment~2.3 displays the slowest decay and the largest persistence time, consistent with the large MSD exponent obtained previously. In contrast, Experiments~2.2 and the combined 2\&4 $\mu$L dataset show substantially shorter persistence times, indicating weaker directional memory.
+
+The observed ordering of persistence times closely follows the ordering of the MSD exponents, suggesting that the superdiffusive behaviour arises from long-lived velocity correlations.
+
+\begin{figure}[!p]
+\centering
+
+%---------------- Row 1 ----------------%
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2.1_droplets_vacf.png}
+\caption{Experiment~2.1}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2.2_droplets_vacf.png}
+\caption{Experiment~2.2}
+\end{subfigure}
+
+\vspace{0.5em}
+
+%---------------- Row 2 ----------------%
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2.3_droplets_vacf.png}
+\caption{Experiment~2.3}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2.4_droplets_vacf.png}
+\caption{Experiment~2.4}
+\end{subfigure}
+
+\vspace{0.5em}
+
+%---------------- Row 3 ----------------%
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2&4ul_droplets_vacf.png}
+\caption{Combined 2\&4 $\mu$L dataset}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\phantom{\includegraphics[width=\linewidth]{plots_for_2.1_droplets_vacf.png}}
+\end{subfigure}
+
+\caption{
+Ensemble velocity autocorrelation functions (VACFs) and the corresponding
+exponential fits used to estimate the persistence time $\tau_p$ for the
+individual experiments and the combined dataset.
+}
+\label{fig:ensemble_vacf}
+\end{figure}
+
+
+
+%=========================================================
+\subsection{Orientation Correlation Function}
+%=========================================================
+
+The orientation correlation function measures the persistence of the droplet direction of motion and provides information about rotational memory. Figure~\ref{fig:ensemble_orientation} shows the ensemble-averaged orientation correlation functions together with exponential fits used to determine the rotational persistence time $\tau_r$ \cite{balakrishnan2021}.
+
+
+The extracted rotational persistence times are
+
+\begin{itemize}
+\item Experiment~2.1: $\tau_r = 38.49 \pm 0.34~\mathrm{s}$
+\item Experiment~2.2: $\tau_r = 13.96 \pm 0.26~\mathrm{s}$
+\item Experiment~2.3: $\tau_r = 59.78 \pm 0.78~\mathrm{s}$
+\item Experiment~2.4: $\tau_r = 32.18 \pm 0.35~\mathrm{s}$
+\item 2\&4 $\mu$L: $\tau_r = 10.83 \pm 0.20~\mathrm{s}$
+\end{itemize}
+
+All datasets exhibit a gradual loss of directional memory with increasing lag time. Experiment~2.3 again displays the strongest persistence, while the combined 2\&4 $\mu$L dataset shows the most rapid decorrelation.
+
+For most datasets, the rotational persistence time is smaller than the velocity persistence time, indicating that directional memory is lost before the velocity fluctuations become completely decorrelated. Nevertheless, the ordering of $\tau_r$ across the experiments closely mirrors the ordering of $\tau_p$, suggesting that both observables are governed by a common persistence mechanism.
+
+Overall, the orientation correlation results support the interpretation that the droplets retain directional memory over timescales significantly longer than expected for ordinary Brownian motion\cite{balakrishnan2021}.
+
+\begin{figure}[!p]
+\centering
+
+%---------------- Row 1 ----------------%
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2.1_droplets_orientation_corr.png}
+\caption{Experiment~2.1}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2.2_droplets_orientation_corr.png}
+\caption{Experiment~2.2}
+\end{subfigure}
+
+\vspace{0.5em}
+
+%---------------- Row 2 ----------------%
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2.3_droplets_orientation_corr.png}
+\caption{Experiment~2.3}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2.4_droplets_orientation_corr.png}
+\caption{Experiment~2.4}
+\end{subfigure}
+
+\vspace{0.5em}
+
+%---------------- Row 3 ----------------%
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{plots_for_2&4ul_droplets_orientation_corr.png}
+\caption{Combined 2\&4 $\mu$L dataset}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\phantom{\includegraphics[width=\linewidth]{plots_for_2.1_droplets_orientation_corr.png}}
+\end{subfigure}
+
+\caption{
+Ensemble orientation correlation functions and the corresponding
+exponential fits used to estimate the rotational persistence time
+$\tau_r$ for the individual experiments and the combined dataset.
+}
+\label{fig:ensemble_orientation}
+\end{figure}
+
+
+
+%=========================================================
+\subsection{Summary of Ensemble Transport Parameters}
+%=========================================================
+
+Table~\ref{tab:ensemble_summary} summarizes the principal transport parameters extracted from the ensemble analysis. The MSD exponent $\alpha$ characterizes the degree of superdiffusion \cite{balakrishnan2021}, while $\tau_p$ and $\tau_r$ quantify translational and rotational persistence, respectively.
+\begin{table}[H]
+\centering
+\caption{Summary of ensemble transport parameters obtained from the experimental datasets. Uncertainties correspond to fit errors.}
+\label{tab:ensemble_summary}
+\begin{tabular}{lcccccc}
+\toprule
+Experiment & $N$ & Frames & $\alpha$ & $\tau_p$ (s) & $\tau_r$ (s) \\
+\midrule
+2.1 & 4 & 3648  & $1.8345 \pm 0.0019$ & $61.83 \pm 0.36$  & $38.49 \pm 0.34$ \\
+2.2 & 6 & 3363  & $1.6482 \pm 0.0053$ & $17.14 \pm 0.56$  & $13.96 \pm 0.26$ \\
+2.3 & 6 & 3951  & $1.8776 \pm 0.0012$ & $125.25 \pm 1.09$ & $59.78 \pm 0.78$ \\
+2.4 & 3 & 5267  & $1.7025 \pm 0.0049$ & $28.40 \pm 0.22$  & $32.18 \pm 0.35$ \\
+2\&4 $\mu$L & 4 & 5526 & $1.5592 \pm 0.0066$ & $14.32 \pm 0.16$ & $10.83 \pm 0.20$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The ensemble analysis consistently indicates superdiffusive transport\cite{balakrishnan2021} across all experimental conditions. The MSD exponents remain significantly above unity, while both velocity and orientation correlations persist over timescales ranging from several seconds to more than one hundred seconds. These observations demonstrate that the droplet motion is strongly correlated and cannot be described as a simple Markovian random walk\cite{schutz2004,balakrishnan2021}.
+
+Among the investigated datasets, Experiment~2.3 exhibits the strongest persistence, as reflected by its large MSD exponent and long correlation times. In contrast, the combined 2\&4 $\mu$L dataset displays the weakest persistence and the smallest superdiffusive exponent. These trends provide evidence that the transport behaviour is sensitive to the experimental conditions and motivate comparison with the numerical simulations presented in the following section.

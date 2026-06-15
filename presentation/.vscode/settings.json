@@ -1,0 +1,68 @@
+{
+  "latex-workshop.formatting.latex": "latexindent",
+  "latex-workshop.formatting.latexindent.path": "node",
+  "latex-workshop.formatting.latexindent.args": [
+    "%WORKSPACE_FOLDER%/wsl-run.js",
+    "latexindent",
+    "-d",
+    "-c",
+    "%OUTDIR%/",
+    "%TMPFILE%"
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk (wsl)",
+      "command": "node",
+      "args": [
+        "%WORKSPACE_FOLDER%/wsl-run.js",
+        "latexmk",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-pdf",
+        "%DOCFILE%"
+      ],
+      "env": {}
+    },
+    {
+      "name": "pdflatex (wsl)",
+      "command": "node",
+      "args": [
+        "%WORKSPACE_FOLDER%/wsl-run.js",
+        "pdflatex",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "%DOCFILE%"
+      ],
+      "env": {}
+    },
+    {
+      "name": "bibtex (wsl)",
+      "command": "node",
+      "args": [
+        "%WORKSPACE_FOLDER%/wsl-run.js",
+        "bibtex",
+        "%DOCFILE%"
+      ],
+      "env": {}
+    }
+  ],
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "latexmk (wsl)",
+      "tools": [
+        "latexmk (wsl)"
+      ]
+    },
+    {
+      "name": "pdflatex -> bibtex -> pdflatex*2 (wsl)",
+      "tools": [
+        "pdflatex (wsl)",
+        "bibtex (wsl)",
+        "pdflatex (wsl)",
+        "pdflatex (wsl)"
+      ]
+    }
+  ]
+}

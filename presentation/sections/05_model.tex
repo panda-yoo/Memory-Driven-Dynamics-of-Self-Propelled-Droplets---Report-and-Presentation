@@ -1,0 +1,389 @@
+%================================================
+\section{Memory-Driven Model}
+\begin{frame}{Memory and Non-Markovian Dynamics}
+	\vspace{-0.4cm}
+
+	\begin{columns}[T]
+
+		\column{0.48\textwidth}
+
+		\begin{block}{Markovian Dynamics}
+			\[
+				P(X_{t+\Delta t}\mid X_t)
+			\]
+
+			\begin{itemize}
+				\item Future depends only on the current state.
+				\item No memory.
+				\item Instantaneous response.
+			\end{itemize}
+			\vspace{-0.6cm}
+
+			\[
+				m\dot v(t)=-\gamma v(t)+\eta(t)
+			\]
+			\vspace{-0.8cm}
+
+			\[
+				K(t)=\gamma\delta(t)
+			\]
+
+		\end{block}
+
+		\column{0.48\textwidth}
+
+		\begin{block}{Non-Markovian Dynamics}
+			\[
+				P(X_{t+\Delta t}\mid X_t,X_{t-\tau},\ldots)
+			\]
+
+			\begin{itemize}
+				\item Future depends on past history.
+				\item Memory effects.
+				\item Persistent correlations.
+			\end{itemize}
+			\vspace{-0.8cm}
+
+			\[
+				m\dot v(t)
+				=
+				-\int_0^t K(t-s)v(s)\,ds
+				+\eta(t)
+			\]
+			\vspace{-0.8cm}
+
+			\[
+				K(t)=K_0e^{-t/\tau_m}
+			\]
+
+		\end{block}
+
+	\end{columns}
+
+	\vspace{0.3cm}
+
+	\begin{alertblock}{Motivation}
+		Finite VACF and OCF decay indicate that information about past
+		velocity and orientation persists for a finite time, motivating
+		a non-Markovian description with memory kernels.
+	\end{alertblock}
+
+\end{frame}
+% % %================================================
+% % \begin{frame}{From Markovian to Non-Markovian Dynamics}
+% % 	\vspace{-0.4cm}
+
+% % 	\begin{columns}[T]
+
+% % 		%---------------------------------------
+% % 		\column{0.48\textwidth}
+
+% % 		\begin{block}{Markovian Dynamics}
+
+% % 			Future motion depends only on the current state.
+% % 			% \vspace{-0.2cm}
+% % 			\vspace{-0.2cm}
+
+% % 			\[
+% % 				P(X_{t+\Delta t}|X_t)
+% % 			\]
+
+% % 			% \vspace{-0.5cm}
+% % 			% \[
+% % 			% 	m\dot v(t)
+% % 			% 	=
+% % 			% 	-\gamma v(t)+\eta(t)
+% % 			% \]
+
+% % 			\begin{itemize}
+% % 				\item No memory.
+% % 				\item Instantaneous response.
+% % 				\item Brownian diffusion.
+% % 			\end{itemize}
+
+% % 		\end{block}
+
+% % 		%---------------------------------------
+% % 		\column{0.48\textwidth}
+
+% % 		\begin{alertblock}{Non-Markovian Dynamics}
+
+% % 			Future motion depends on past history.
+% % 			% \vspace{-0.2cm}
+% % 			\vspace{0.2cm}
+
+% % 			\[
+% % 				P(X_{t+\Delta t}|X_t,X_{t-\tau},\ldots)
+% % 			\]
+
+% % 			% \vspace{-0.7cm}
+
+% % 			% \[
+% % 			% 	m\dot v(t)
+% % 			% 	=
+% % 			% 	-\int_0^t K(t-s)v(s)\,ds
+% % 			% 	+\eta(t)
+% % 			% \]
+
+% % 			\begin{itemize}
+% % 				\item Memory effects.
+% % 				\item History-dependent motion.
+% % 				\item Generalized Langevin Equation.
+% % 			\end{itemize}
+
+% % 		\end{alertblock}
+
+% % 	\end{columns}
+
+% % 	\vspace{0.15cm}
+
+% % 	\begin{alertblock}{Motivation}
+
+% % 		The observed self-avoiding trajectories suggest that past motion influences future motion, motivating a non-Markovian description.
+
+% % 	\end{alertblock}
+
+% % \end{frame}
+% %================================================
+
+% \begin{frame}{Memory Kernels and Correlations}
+% 	\vspace{-0.3cm}
+
+% 	\begin{columns}[T]
+
+% 		%---------------------------------------
+% 		\column{0.48\textwidth}
+
+% 		\begin{block}{Markovian Limit}
+
+% 			\[
+% 				K(t)=\gamma\delta(t)
+% 			\]
+% 			\vspace{-0.5cm}
+
+% 			\[
+% 				m\dot v(t)
+% 				=
+% 				-\gamma v(t)+\eta(t)
+% 			\]
+
+% 			\begin{itemize}
+% 				\item Memoryless dynamics.
+% 				\item Instantaneous response.
+% 				\item Future depends only on the current state.
+% 				\item Correlations decay rapidly.
+% 			\end{itemize}
+
+% 		\end{block}
+
+% 		%---------------------------------------
+% 		\column{0.48\textwidth}
+
+% 		\begin{alertblock}{Finite Memory}
+
+% 			\[
+% 				K(t)=K_0 e^{-t/\tau_m}
+% 			\]
+% 			\vspace{-0.8cm}
+
+% 			\[
+% 				m\dot v(t)
+% 				=
+% 				-\int_0^t K(t-s)v(s)\,ds
+% 				+\eta(t)
+% 			\]
+
+% 			\begin{itemize}
+% 				\item Past states influence the present.
+% 				\item Finite memory timescale $\tau_m$.
+% 				\item Persistent temporal correlations.
+% 				\item Future depends on motion history.
+% 			\end{itemize}
+
+% 		\end{alertblock}
+
+% 	\end{columns}
+
+% 	\vspace{0.2cm}
+
+% 	\begin{alertblock}{Key Idea}
+
+% 		A finite memory kernel produces persistent temporal correlations.
+
+% 	\end{alertblock}
+
+% \end{frame}
+
+%================================================
+\begin{frame}{Chemical Memory Field}
+	\[
+		\frac{\partial c}{\partial t}
+		=
+		D\nabla^2 c
+		+
+		\alpha G_{R_t}(x-X_t)
+	\]
+
+	\begin{itemize}
+		\item Droplet continuously deposits chemical material.
+		\item Deposited material diffuses slowly.
+		\item The field retains information about past positions.
+	\end{itemize}
+	\begin{alertblock}{Key Idea}
+		The chemical field evolves more slowly than the droplet motion,
+		allowing information about previously visited locations to persist.
+	\end{alertblock}
+\end{frame}
+
+%================================================
+\begin{frame}{Non-Markovian Droplet Model}
+
+	\begin{columns}[T]
+
+		%================================================
+		\column{0.48\textwidth}
+
+		\begin{block}{Chemical Field (PDE)}
+
+			\[
+				\frac{\partial c}{\partial t}
+				=
+				D\nabla^2 c
+				+
+				\alpha G_{R_t}(\mathbf{x}-\mathbf{X}_t)
+			\]
+
+			\begin{itemize}
+				\item Diffusion of chemical field.
+				\item Moving droplet source.
+				\item Stores memory.
+			\end{itemize}
+
+		\end{block}
+
+		%================================================
+		\column{0.48\textwidth}
+
+		\begin{alertblock}{Droplet Motion (SDE)}
+
+			\[
+				\eta_t \dot{\mathbf X}_t
+				=
+				-\mathbf F_{\mathrm{chem}}
+				+
+				\sqrt{\sigma}\,\xi_t
+			\]
+
+			\vspace{-0.1cm}
+
+			\[
+				\mathbf F_{\mathrm{chem}}
+				\propto
+				\int_{\Omega}
+				G_{R_t}
+				\nabla c\,d\mathbf x
+			\]
+
+			\begin{itemize}
+				\item Drift from chemical gradients.
+				\item $-\nabla c$ gives self-repulsion.
+				\item Noise drives fluctuations.
+			\end{itemize}
+
+		\end{alertblock}
+	\end{columns}
+
+	\vspace{0.15cm}
+
+	\begin{alertblock}{Feedback Loop}
+
+		\[
+			\text{Motion}
+			\rightarrow
+			\text{Chemical Field}
+			\rightarrow
+			\text{Motion}
+		\]
+
+	\end{alertblock}
+
+	\vspace{0.2cm}
+
+	\rightcite{droplet2025}
+
+\end{frame}
+
+%================================================
+\begin{frame}{Model Parameters and Notation}
+	\vspace{-0.2cm}
+
+	\begin{columns}[T]
+
+		%================================================
+		\column{0.58\textwidth}
+
+		\begin{block}{Model Equations}
+
+			\textbf{Chemical Field}
+
+			\[
+				\frac{\partial c}{\partial t}
+				=
+				D\nabla^2 c
+				+
+				\alpha G_{R_t}(\mathbf{x}-\mathbf{X}_t)
+			\]
+
+			\vspace{0.2cm}
+
+			\textbf{Droplet Motion}
+			\vspace{-0.4cm}
+
+			\[
+				\eta_t \dot{\mathbf X}_t
+				=
+				-
+				\frac{\beta R_t^3}{\delta^3}
+				\int_{\Omega}
+				G_{R_t}(\mathbf{x}-\mathbf X_t)
+				\nabla c(\mathbf{x},t)\,d\mathbf x
+				+
+				\sqrt{\sigma}\,\xi_t
+			\]
+
+		\end{block}
+
+		\begin{alertblock}{Key Idea}
+			Past droplet positions are encoded in the chemical field and influence future motion through chemical-gradient sensing.
+		\end{alertblock}
+
+		%================================================
+		\column{0.38\textwidth}
+
+		\begin{block}{Parameters}
+
+			\centering
+
+			\small
+
+			\begin{tabular}{ll}
+				\hline
+				\textbf{Symbol} & \textbf{Meaning}         \\
+				\hline
+				$D$             & Diffusion coefficient    \\
+				$\alpha$        & Source strength          \\
+				$R_t$           & Droplet radius           \\
+				$\eta_t$        & Friction coefficient     \\
+				$\sigma$        & Noise strength           \\
+				$\delta$        & Interaction length scale \\
+				$\Omega$        & Computational domain     \\
+				\hline
+			\end{tabular}
+
+		\end{block}
+
+		\vspace{0.2cm}
+
+	\end{columns}
+	\rightcite{droplet2025}
+\end{frame}

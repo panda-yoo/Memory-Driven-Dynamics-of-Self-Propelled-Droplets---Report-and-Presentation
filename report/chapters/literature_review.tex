@@ -1,0 +1,415 @@
+\chapter{Memory-Driven Dynamics in Active Droplet Systems}
+\section{Markovian Random Walks}
+A Markov process is a stochastic process whose future evolution depends only on its present state\cite{balakrishnan2021,resnick1992} and not on the sequence of events that preceded it. This property is known as the Markov property and may be expressed as\cite{resnick1992}
+
+\begin{equation}
+P(X_{n+1}|X_n,X_{n-1},\ldots,X_0)
+=
+P(X_{n+1}|X_n).
+\end{equation}
+
+The simplest example is a classical random walk, where a particle performs successive independent displacements. If $\xi_n$ denotes the displacement during step $n$ \cite{klafter2011,resnick1992}, then
+
+\begin{equation}
+\langle \xi_n \xi_m \rangle
+=
+\sigma^2 \delta_{nm},
+\end{equation}
+
+where $\delta_{nm}$ is the Kronecker delta. This relation implies that displacements at different times are uncorrelated.
+
+In the continuous-time limit, the dynamics of a Brownian particle may be described by the Langevin equation\cite{balakrishnan2021}
+
+\begin{equation}
+m\dot{v}(t)
+=
+-\gamma v(t)
++
+\eta(t),
+\end{equation}
+
+where $\gamma$ is the friction coefficient and $\eta(t)$ is a Gaussian white-noise force satisfying
+
+\begin{equation}
+\langle \eta(t) \rangle = 0,
+\end{equation}
+
+and the fluctuation--dissipation relation is given by \cite{klafter2011,balakrishnan2021}
+
+\begin{equation}
+\langle \eta(t)\eta(t') \rangle
+=
+2\gamma k_B T \delta(t-t').
+\end{equation}
+
+Because both the friction and stochastic forcing are instantaneous, the dynamics possess no memory and are therefore Markovian.
+
+A key consequence of Markovian diffusion is that the mean squared displacement grows linearly with time,
+
+\begin{equation}
+\langle r^2(t) \rangle
+=
+2dDt,
+\end{equation}
+
+where $d$ is the spatial dimension and $D$ is the diffusion coefficient. This linear scaling corresponds to normal diffusion and arises from the statistical independence of successive displacements.
+
+Although Markovian models successfully describe many equilibrium systems, they become inadequate when correlations persist over long times or when the environment stores information about previous states. Such situations require a non-Markovian description, discussed in the following section.
+
+\section{Non-Markovian Random Walks}
+
+Classical Markovian random walks assume that the future evolution of a stochastic process\cite{balakrishnan2021,schutz2004} depends only on its present state and not on its previous history. In many physical systems, however, the dynamics exhibit memory-dependent behavior in which earlier states influence future motion. Such stochastic processes are referred to as non-Markovian random walks. Memory effects may arise from temporal correlations, persistence of motion, environmental interactions, or delayed responses within the system.
+
+In a Markovian random walk, successive displacements are statistically independent and satisfy as discussed in Sec.~21.3 of \cite{balakrishnanMathematical} and in \cite{resnick1992}.
+
+\begin{equation}
+\langle \xi_n \xi_m \rangle
+\propto
+\delta_{nm},
+\end{equation}
+
+where $\delta_{nm}$ is the Kronecker delta function. This relation implies that the displacement at one step is uncorrelated with previous steps. In contrast, non-Markovian systems exhibit correlations between different times,
+
+\begin{equation}
+\langle \xi_n \xi_m \rangle
+\neq 0,
+\qquad
+n\neq m,
+\end{equation}
+
+indicating the presence of memory in the dynamics.
+
+One important extension of the classical random walk is the continuous-time random walk (CTRW) model\cite{klafter2011}, in which random jumps are separated by random waiting times \cite{klafter2011}. In this framework, the stochastic process is characterized by a waiting-time probability density function $\psi(t)$ describing the time interval between successive jumps. The probability of finding the walker at site $j$ at time $t$ can be written as
+
+\begin{equation}
+P(j,t)
+=
+\sum_{n=0}^{\infty}
+P_n(j)\,W(n,t),
+\end{equation}
+
+where $P_n(j)$ denotes the probability of being at site $j$ after $n$ jumps and $W(n,t)$ is the probability that exactly $n$ jumps have occurred up to time $t$.
+
+The Markovian limit is recovered when the waiting-time distribution is exponential,
+
+\begin{equation}
+\psi(t)=\lambda e^{-\lambda t},
+\end{equation}
+
+where $\lambda$ is a constant transition rate. In this case, the jumps occur independently and the dynamics reduce to ordinary diffusion. However, when the waiting-time distribution possesses a long tail,
+
+\begin{equation}
+\psi(t)\sim \frac{1}{t^{1+\beta}},
+\qquad
+0<\beta<1,
+\end{equation}
+
+the process becomes non-Markovian due to the emergence of long waiting events and temporal correlations.
+
+Another important framework for describing memory-dependent stochastic dynamics is the generalized Langevin equation (GLE) \cite{balakrishnan2021}. Unlike the ordinary Langevin equation, which assumes instantaneous friction, the GLE incorporates memory through a retarded friction kernel. The generalized Langevin equation is written as\cite{balakrishnan2021}
+
+\begin{equation}
+m\dot{v}(t)
+=
+-m\int_{-\infty}^{t}
+\gamma(t-t')v(t')dt'
++
+\eta(t)
++
+F_{\mathrm{ext}}(t),
+\end{equation}
+
+where $\gamma(t-t')$ is the memory kernel, $\eta(t)$ is a stochastic noise term, and $F_{\mathrm{ext}}(t)$ is an external force. The convolution integral introduces dependence on the complete velocity history of the particle, thereby producing non-Markovian dynamics.
+
+The memory kernel describes how strongly earlier motion influences the present dynamics. In the limit
+
+\begin{equation}
+\gamma(t)=\gamma\delta(t),
+\end{equation}
+
+the generalized Langevin equation reduces to the ordinary Markovian Langevin equation. However, slowly decaying memory kernels generate long-range temporal correlations and anomalous transport behavior.
+
+Several non-Markovian random walk models\cite{schutz2004} have been proposed to investigate memory effects in stochastic systems. Persistent random walks introduce directional correlations between successive displacements, while self-avoiding and self-repelling random walks incorporate interactions between the walker and its previous trajectory. A notable example is the Elephant Random Walk model\cite{schutz2004}, in which the walker retains memory of earlier steps, producing long-range correlations and anomalous diffusion \cite{schutz2004}. Extensions involving partial or fading memory, often referred to as Alzheimer random walks, have also been investigated to model systems with imperfect memory retention.
+
+Non-Markovian stochastic dynamics are particularly relevant in active matter systems\cite{hokmabad2022,droplet2025}. In chemically active droplets, interactions with self-generated chemical gradients can introduce persistence, chemotactic behavior, and self-repelling motion. Since the surrounding chemical environment can retain information about earlier trajectories, the dynamics become history-dependent and cannot be fully described by classical Markovian diffusion models.
+
+\section{Anomalous Diffusion and Memory Effects}
+
+Diffusion processes are commonly characterized through the mean squared displacement (MSD)\cite{klafter2011},
+
+\begin{equation}
+\langle r^2(t)\rangle
+=
+\left\langle
+|\mathbf r(t)-\mathbf r(0)|^2
+\right\rangle.
+\end{equation}
+
+For ordinary Brownian motion and classical random walks, the MSD grows linearly with time\cite{klafter2011},
+
+\begin{equation}
+\langle r^2(t)\rangle
+\propto
+t,
+\end{equation}
+
+which corresponds to normal diffusion. This behavior arises from the statistical independence of successive displacements and the absence of long-term correlations.
+
+Many nonequilibrium systems, however, exhibit deviations from normal diffusion. In such cases, the MSD follows the generalized scaling relation
+
+\begin{equation}
+\langle r^2(t)\rangle
+\propto
+t^\alpha,
+\end{equation}
+
+where $\alpha$ is the diffusion exponent. For
+
+\begin{equation}
+0<\alpha<1,
+\end{equation}
+
+the dynamics are subdiffusive, while
+
+\begin{equation}
+1<\alpha<2,
+\end{equation}
+
+corresponds to superdiffusion. The limiting case
+
+\begin{equation}
+\alpha=2,
+\end{equation}
+
+describes ballistic motion associated with strongly persistent transport\cite{balakrishnan2021}..
+
+Anomalous diffusion frequently emerges in systems with memory effects or long-range correlations. In non-Markovian stochastic processes, the displacement at a given time may depend on the complete history of previous motion, resulting in deviations from ordinary diffusive scaling. Long waiting times in CTRW models, persistent directional correlations, and environmental feedback mechanisms can all generate anomalous transport behavior\cite{balakrishnan2021,schutz2004}.
+
+Memory effects are often characterized through velocity autocorrelation functions,
+
+\begin{equation}
+C(t)
+=
+\frac{
+\langle v(0)v(t)\rangle
+}{
+\langle v^2\rangle
+},
+\end{equation}
+
+which measure the persistence of motion over time. In ordinary diffusion processes, the velocity correlations decay rapidly, indicating that the system quickly loses memory of its earlier motion. In contrast, systems with slowly decaying correlations retain memory over long time intervals and can exhibit persistent or anomalous transport.
+
+The corresponding velocity correlation time is defined as\cite{balakrishnan2021}
+
+\begin{equation}
+\tau_{\mathrm{vel}}
+=
+\int_0^\infty
+C(t)\,dt,
+\end{equation}
+
+which provides a measure of the temporal persistence of the dynamics \cite{balakrishnan2021}. In systems governed by generalized Langevin dynamics, the velocity correlation time is influenced by the memory kernel, leading to transport behavior that differs significantly from ordinary Brownian motion.
+
+Anomalous diffusion is widely observed in active matter systems, biological transport processes, and chemically active droplets. In active droplets, self-generated chemical gradients and environmental interactions can produce persistence, directional correlations, and self-repelling behavior. Such effects lead to evolving motility and nontrivial transport properties that cannot be described using ordinary diffusion theory alone. Consequently, anomalous diffusion models provide an important theoretical framework for understanding memory-dependent transport phenomena in active matter systems.
+\section{Chemically Active Droplets}
+
+Chemically active droplets\cite{izzet2020,vrugt2025} are small liquid droplets that can move on their own by using chemical energy from the surrounding medium. Unlike passive droplets, they do not need an external push to move.
+
+In this work, the active system is a Belousov--Zhabotinsky (BZ) droplet\cite{FastMoving2021article,Shajahan2026} placed in a monoolein--squalane oil medium. The BZ reaction inside the droplet shows periodic chemical oscillations. These oscillations create surface-tension differences at the droplet boundary.
+
+Because of these surface-tension gradients, fluid flow is generated around the droplet, and the droplet starts to move by itself. This motion is known as Marangoni-driven propulsion\cite{izzet2020,FastMoving2021article}. As the chemical reaction becomes more active, the droplet motion also becomes faster and more irregular.
+
+The droplet is recorded from above using a camera, so the motion can be treated as approximately two-dimensional. From the video frames, the droplet position is tracked in time and converted into a trajectory. These trajectories are then used to measure quantities such as speed, direction changes, oscillation frequency, and interaction time.
+
+The detailed theoretical description of the droplet motion is given later using continuum and stochastic models\cite{FastMoving2021article,Shajahan2026}.
+\begin{equation}
+\frac{\partial c}{\partial t}
+=
+D\nabla^2 c + R(c),
+\end{equation}
+
+where $D$ is the diffusion coefficient and $R(c)$ represents the nonlinear reaction kinetics. The coupling between chemical-wave propagation and Marangoni-driven interfacial flows gives rise to the rich self-propelled behaviour observed in active BZ droplets.
+\section{Non-Markovian Droplet (NMD) Model and the Generalized Langevin Equation}
+The Non-Markovian Droplet (NMD) model introduced in \cite{droplet2025} provides a theoretical framework for describing memory-dependent active droplet dynamics. The central idea is that the droplet continuously modifies its surrounding chemical environment, while the resulting concentration field stores information about past droplet positions. This feedback between droplet motion and the evolving chemical field gives rise to non-Markovian behaviour.
+
+The concentration field is described by
+\begin{equation}
+\partial_t c_t(\mathbf{x})
+=
+D\nabla^2 c_t(\mathbf{x})
++
+\alpha_t G_{R_t}(\mathbf{x}-\mathbf{X}_t),
+\end{equation}
+
+where $c_t(\mathbf{x})$ is the chemical concentration field, $D$ is the
+diffusion coefficient, $\alpha_t$ is the chemical emission rate, and
+$G_{R_t}$ represents a Gaussian source centred at the droplet position
+$\mathbf{X}_t$.
+
+The droplet motion is governed by
+
+\begin{equation}
+\gamma_t \dot{\mathbf X}_t
+=
+-\beta \frac{R_t^3}{\delta^3}
+\int
+G_{R_t}(\mathbf{x}-\mathbf X_t)
+\nabla c_t(\mathbf{x})
+\, d\mathbf{x}
++
+\sqrt{\sigma}\,\boldsymbol{\xi}_t ,
+\end{equation}
+
+where $\gamma_t$ is the friction coefficient, $\beta$ characterizes the
+coupling between the droplet and the concentration gradient, $R_t$ is the
+droplet radius, $\delta$ is a characteristic length scale, $\sigma$
+determines the noise strength, and $\boldsymbol{\xi}_t$ denotes Gaussian
+white noise.
+
+Because the concentration field evolves by diffusion\cite{droplet2025}, it retains
+information about previously visited droplet positions. This stored
+information acts as a memory field and influences future motion.
+
+%----------------------------------------------------------
+\subsection{Memory as Storage and Retrieval of Information}
+%----------------------------------------------------------
+
+Memory can be viewed as a process of storing information about past events
+and later retrieving that information to influence future behaviour\cite{droplet2025}. In
+active droplet systems, this role is played by the chemical concentration
+field generated by the droplet itself.
+
+As the droplet moves, it continuously releases chemical material into the
+surrounding medium. The deposited chemical does not disappear immediately;
+instead, it diffuses gradually and forms a concentration field that
+persists for some time. Because this field evolves more slowly than the
+droplet motion, it retains information about locations visited in the
+past.
+
+At later times, the droplet responds to gradients in this concentration
+field. As a result, its motion depends not only on its current position
+but also on information stored in the surrounding environment. The
+chemical field therefore acts as a memory reservoir that couples the past
+trajectory of the droplet to its future motion.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    node distance=2.8cm,
+    every node/.style={
+        draw,
+        rounded corners,
+        align=center,
+        minimum width=3.4cm,
+        minimum height=1cm
+    },
+    >=Stealth
+]
+
+\node (motion) {Droplet Motion};
+
+\node (deposit) [right=of motion]
+{Chemical\\Deposition};
+
+\node (memory) [below=of deposit]
+{Chemical Field\\(Memory Storage)};
+
+\node (retrieve) [left=of memory]
+{Gradient Sensing\\(Memory Retrieval)};
+
+\draw[->] (motion) -- (deposit);
+\draw[->] (deposit) -- (memory);
+\draw[->] (memory) -- (retrieve);
+\draw[->] (retrieve) -- (motion);
+
+\end{tikzpicture}
+
+\caption{
+Schematic illustration of the memory mechanism\cite{droplet2025} in active droplets.
+As the droplet moves, it deposits chemical material into the surrounding
+medium. The resulting concentration field stores information about
+previously visited locations. At later times, the droplet responds to
+local chemical gradients generated by this field, producing a feedback
+loop between past and future motion.
+}
+\label{fig:memory_loop}
+\end{figure}
+
+Figure~\ref{fig:memory_loop} illustrates this feedback mechanism. The
+droplet first modifies its environment through chemical deposition. The
+resulting concentration field stores information about previously visited
+locations. As the field evolves, it generates chemical gradients that
+influence subsequent droplet motion. This creates a continuous feedback
+loop between the droplet and its environment.
+
+The presence of such feedback means that the dynamics are history
+dependent\cite{balakrishnan2021,droplet2025}. Unlike a Markov process, where the future depends only on the
+present state, the motion of the droplet is influenced by information
+retained from earlier times. The system therefore exhibits
+non-Markovian behaviour.
+
+%----------------------------------------------------------
+\subsection{Connection to the Generalized Langevin Equation}
+%----------------------------------------------------------
+
+The memory mechanism described above is closely related to the
+Generalized Langevin Equation (GLE)\cite{balakrishnan2021}, a standard framework for describing
+systems with memory:
+
+\begin{equation}
+m\dot{\mathbf{v}}(t)
+=
+-\int_0^t K(t-s)\mathbf{v}(s)\,ds
++
+\boldsymbol{\eta}(t),
+\end{equation}
+
+where $K(t)$ is the memory kernel and $\boldsymbol{\eta}(t)$ is a
+stochastic force. Unlike the ordinary Langevin equation, the friction
+term depends on the complete velocity history through the memory kernel.
+
+The self-repelling droplet model can therefore be interpreted as a
+physical realization of a generalized Langevin process. The chemical
+field acts as a memory reservoir, while diffusion of the chemical trail
+determines the effective memory timescale. Consequently, future motion
+depends on information stored from earlier times.
+
+From a probabilistic perspective\cite{schutz2004},
+
+\begin{equation}
+P(\mathbf{X}_{n+1}|\mathbf{X}_n,\mathbf{X}_{n-1},\ldots)
+\neq
+P(\mathbf{X}_{n+1}|\mathbf{X}_n),
+\end{equation}
+
+which is the defining feature of non-Markovian dynamics.
+
+To characterize these dynamics, the mean squared displacement (MSD)\cite{balakrishnan2021} is
+used:
+
+\begin{equation}
+\mathrm{MSD}(\tau)
+=
+\left\langle
+\left|
+\mathbf{X}(t+\tau)-\mathbf{X}(t)
+\right|^2
+\right\rangle.
+\end{equation}
+
+For normal diffusion, the MSD grows linearly with time. Systems with
+memory often exhibit persistent or ballistic motion at short times and
+diffusive behaviour at longer times. This behaviour can be quantified
+using the local MSD exponent\cite{balakrishnan2021}
+
+\begin{equation}
+\alpha(\tau)
+=
+\frac{d\log(\mathrm{MSD})}
+     {d\log(\tau)}.
+\end{equation}
+
+Values of $\alpha \approx 2$ indicate ballistic motion, whereas
+$\alpha \approx 1$ corresponds to ordinary diffusion. A crossover from
+$\alpha \approx 2$ to $\alpha \approx 1$ is commonly interpreted as a
+signature of finite memory effects in active droplet systems\cite{balakrishnan2021,droplet2025}.

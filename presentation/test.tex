@@ -1,0 +1,13 @@
+\documentclass{article}
+\usepackage[backend=biber,style=authoryear,maxcitenames=2]{biblatex}
+\addbibresource{references.bib}
+\begin{document}
+Test 1: \citeauthor{D5SM01187F}
+
+Test 2: \citeauthor*{D5SM01187F}
+
+Test 3: \AtNextCite{\DeclareNameAlias{labelname}{given-family}}\citeauthor{D5SM01187F}
+
+Test 4: \citename{D5SM01187F}{author}
+
+\end{document}

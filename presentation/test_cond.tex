@@ -1,0 +1,16 @@
+\documentclass{article}
+\usepackage[backend=biber,style=authoryear]{biblatex}
+\addbibresource{references.bib}
+
+\DeclareCiteCommand{\myjournalortitle}
+  {\usebibmacro{prenote}}
+  {\iffieldundef{journaltitle}
+     {\printfield{title}}
+     {\printfield{journaltitle}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+\begin{document}
+Article: \myjournalortitle{droplet2025}
+Book: \myjournalortitle{balakrishnan2021}
+\end{document}

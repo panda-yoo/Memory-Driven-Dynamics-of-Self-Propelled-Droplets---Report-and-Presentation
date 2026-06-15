@@ -1,0 +1,195 @@
+% ================================================================
+% Section 4.4 — Comparison Between Experiment and Simulation
+% ================================================================
+
+\section{Comparison Between Experiment and Simulation}
+\label{sec:comparison}
+
+The experimental results and the simulation results tell a very similar story. Both show that the droplets do not move like simple random walkers. Instead, their motion is influenced by where they have already been. In the model, the droplet leaves behind a chemical trail, and this trail affects the next steps of motion. The following subsections compare the main observables and show that the same basic idea explains the data well.
+
+% ----------------------------------------------------------------
+\subsection{Mean-Squared Displacement}
+\label{subsec:comp_msd}
+
+\paragraph{Experimental observation.}
+As shown in Figures~\ref{fig:ensemble_msd} and~\ref{fig:ensemble_alpha}, the droplets show superdiffusive motion over intermediate lag times. The ensemble-averaged exponent satisfies $\alpha > 1$ for all datasets. At longer lag times, the exponent slowly moves toward unity, which means the motion becomes closer to normal diffusion.
+
+\paragraph{Model prediction and mechanism.}
+For a memoryless random walk, the MSD grows linearly with time, so $\alpha = 1$ \cite{klafter2011,resnick1992}. The PDE--SDE model gives a different result because the droplet avoids regions that it has already visited\cite{droplet2025}. The chemical trail behind the droplet pushes it toward new space, so it travels farther than a normal random walker. As the trail spreads out and decays, this effect becomes weaker, and the motion slowly returns toward ordinary diffusion.
+
+\paragraph{Interpretation.}
+The observed behaviour, with $\alpha > 1$ followed by a gradual move toward $\alpha \approx 1$, matches the idea of trail-based repulsion. A system without memory would show $\alpha = 1$ from the start. The MSD therefore supports the idea that the droplet is influenced by its own past path.
+
+\begin{table}[htbp]
+\centering
+\caption{Comparison of MSD features between experiment and simulation.}
+\label{tab:msd_comparison}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{p{2.4cm} p{3.0cm} p{2.3cm} p{2.3cm} p{3.2cm}}
+\hline\hline
+\textbf{Feature} & \textbf{Meaning} & \textbf{Experiment} & \textbf{Simulation} & \textbf{Interpretation} \\
+\hline
+MSD scaling & How fast the droplet spreads & $\alpha > 1$ & $\alpha > 1$ & Trail repulsion makes the motion more persistent. \\[4pt]
+Transport type & Type of motion & Non-Markovian & Non-Markovian & Past motion affects the present. \\[4pt]
+Long-time trend & Behaviour at large lag times & $\alpha \to 1$ & $\alpha \to 1$ & The trail weakens with time. \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+% ----------------------------------------------------------------
+\subsection{Local MSD Exponent}
+\label{subsec:comp_local_exponent}
+
+\paragraph{Experimental observation.}
+As shown in Figure~\ref{fig:ensemble_alpha}, the local exponent $\alpha(\tau)$ is above 1 at short lag times and then slowly decreases toward 1 at longer lag times. This means the droplets move in a more persistent way at first and then lose that persistence gradually. The change is smooth, not sudden.
+
+\paragraph{Model prediction and mechanism.}
+In the PDE--SDE model, the chemical gradient is strongest just after the droplet passes by a point \cite{droplet2025}. Later, the field spreads out and becomes weaker. So the guiding effect on the droplet also becomes weaker with time. This naturally gives a large value of $\alpha(\tau)$ at short times and a gradual decrease at longer times.
+
+\paragraph{Interpretation.}
+The smooth decrease of $\alpha(\tau)$ rules out a sudden change between two very different motion states. Instead, it supports a model in which the memory fades slowly as the chemical field diffuses and decays.
+
+\begin{table}[htbp]
+\centering
+\caption{Comparison of local MSD exponent features.}
+\label{tab:local_msd_comparison}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{p{2.4cm} p{3.0cm} p{2.3cm} p{2.3cm} p{3.2cm}}
+\hline\hline
+\textbf{Feature} & \textbf{Meaning} & \textbf{Experiment} & \textbf{Simulation} & \textbf{Interpretation} \\
+\hline
+Short-time $\alpha(\tau)$ & Initial persistence & $\approx 1.5$ & $\approx 1.5$ & Fresh trail gives strong guidance. \\[4pt]
+Long-time $\alpha(\tau)$ & Residual memory & Decreases toward 1 & Decreases toward 1 & Trail fades with time. \\[4pt]
+Transition shape & How the change occurs & Smooth & Smooth & Memory loss is gradual, not sudden. \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+% ----------------------------------------------------------------
+\subsection{Velocity Autocorrelation Function}
+\label{subsec:comp_vacf}
+
+\paragraph{Experimental observation.}
+The VACF $C_v(\tau)=\langle \mathbf{v}(t)\cdot\mathbf{v}(t+\tau)\rangle$, shown in Figures~\ref{fig:ensemble_vacf} and~\ref{tab:ensemble_summary}, is positive at short lag times and then decays exponentially. This gives a finite velocity persistence time $\tau_p$.
+
+\paragraph{Model prediction and mechanism.}
+In the PDE--SDE model, the droplet responds to the gradient of its own chemical trail. Because that trail was created by the droplet itself, the steering force tends to point along the recent direction of motion. This keeps nearby velocity vectors correlated. As the chemical field weakens, the correlation also fades, which gives the exponential decay.
+
+\paragraph{Interpretation.}
+A purely Brownian particle would not show this behaviour. The finite VACF and the measured persistence time show that the droplet keeps part of its earlier velocity for a short time. This is direct evidence of memory in the motion.
+
+\begin{table}[htbp]
+\centering
+\caption{Comparison of VACF features between experiment and simulation.}
+\label{tab:vacf_comparison}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{p{2.4cm} p{3.0cm} p{2.3cm} p{2.3cm} p{3.2cm}}
+\hline\hline
+\textbf{Feature} & \textbf{Meaning} & \textbf{Experiment} & \textbf{Simulation} & \textbf{Interpretation} \\
+\hline
+Functional form & How velocity memory decays & Exponential & Exponential & One dominant relaxation rate. \\[4pt]
+Short-time value & Early directional memory & Strongly positive & Strongly positive & Droplet follows its own trail. \\[4pt]
+Persistence time $\tau_p$ & Duration of velocity memory & Finite & Comparable finite value & Trail lifetime sets the memory window. \\[4pt]
+Long-time limit & Final loss of memory & Goes to zero & Goes to zero & The trail eventually fades away. \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+% ----------------------------------------------------------------
+\subsection{Orientation Correlation Function}
+\label{subsec:comp_ocf}
+
+\paragraph{Experimental observation.}
+The OCF $C_{\theta}(\tau)=\langle \cos[\theta(t+\tau)-\theta(t)] \rangle$, shown in Figures~\ref{fig:ensemble_orientation} and~\ref{tab:ensemble_summary}, also decays exponentially. It starts near 1 at short times and goes to 0 at long times. The rotational persistence time $\tau_r$ is close to the velocity persistence time $\tau_p$.
+
+\paragraph{Model prediction and mechanism.}
+The OCF measures how long the droplet keeps the same heading. In the model, the chemical trail is strongest behind the droplet and weaker to the sides. This makes large turns less likely and helps keep the heading stable for a while. Since both the velocity and the orientation are controlled by the same trail, $\tau_r$ should be close to $\tau_p$.
+
+\paragraph{Interpretation.}
+The experimental OCF matches this picture well. The similarity between $\tau_r$ and $\tau_p$ shows that speed memory and direction memory come from the same chemical field.
+
+\begin{table}[htbp]
+\centering
+\caption{Comparison of orientation correlation features.}
+\label{tab:ocf_comparison}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{p{2.4cm} p{3.0cm} p{2.3cm} p{2.3cm} p{3.2cm}}
+\hline\hline
+\textbf{Feature} & \textbf{Meaning} & \textbf{Experiment} & \textbf{Simulation} & \textbf{Interpretation} \\
+\hline
+Functional form & How orientation memory fades & Exponential & Exponential & Trail makes turning less likely. \\[4pt]
+Rotational persistence $\tau_r$ & How long heading stays similar & Finite, $\sim\tau_p$ & Finite, $\sim\tau_p$ & Same field controls both effects. \\[4pt]
+Long-time behaviour & Final loss of direction memory & Correlates to zero & Correlates to zero & Trail fades; motion becomes random. \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+% ----------------------------------------------------------------
+\subsection{Persistence Times}
+\label{subsec:comp_persistence}
+
+The persistence times $\tau_p$ and $\tau_r$, extracted from the VACF and OCF fits, are direct signs of memory. In a Markovian system, these times would be zero because each step would be independent of the previous one. Here, both experiment and simulation give finite values, which means the droplet remembers its recent motion for a short time.
+
+Physically, $\tau_p$ measures how long the velocity stays correlated, while $\tau_r$ measures how long the droplet keeps a similar direction. The fact that these two times are close to each other shows that velocity memory and rotational memory are linked. Both come from the same chemical field, and both fade as the field diffuses and decays.
+
+\begin{table}[htbp]
+\centering
+\caption{Comparison of persistence times between experiment and simulation.}
+\label{tab:persistence_comparison}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{p{2.4cm} p{3.0cm} p{2.3cm} p{2.3cm} p{3.2cm}}
+\hline\hline
+\textbf{Observable} & \textbf{Meaning} & \textbf{Experiment} & \textbf{Simulation} & \textbf{Interpretation} \\
+\hline
+Velocity persistence $\tau_p$ & How long speed memory lasts & Finite, non-zero & Comparable value & Field lifetime sets the memory time. \\[4pt]
+Rotational persistence $\tau_r$ & How long direction memory lasts & Finite, $\sim\tau_p$ & Comparable, $\sim\tau_p$ & Same field controls both. \\[4pt]
+Relation $\tau_r \approx \tau_p$ & Link between speed and direction & Observed & Reproduced & One chemical trail explains both. \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+% ----------------------------------------------------------------
+\subsection{Overall Assessment of the Memory-Driven Model}
+\label{subsec:comp_overall}
+
+Table~\ref{tab:overall_assessment} gives a summary of the comparison across all observables.
+
+\begin{table}[htbp]
+\centering
+\caption{Overall assessment of the PDE--SDE model against experiment.}
+\label{tab:overall_assessment}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{p{1.8cm} p{3.2cm} p{3.0cm} p{1.4cm} p{3.0cm}}
+\hline\hline
+\textbf{Observable} & \textbf{Experiment} & \textbf{Simulation} & \textbf{Match} & \textbf{Meaning} \\
+\hline
+MSD & Superdiffusive, then closer to normal diffusion & Same trend & Strong & Trail pushes droplet into new space. \\[4pt]
+Local $\alpha(\tau)$ & Smooth decay from above 1 to about 1 & Same trend & Strong & Memory fades gradually. \\[4pt]
+VACF & Exponential decay with finite $\tau_p$ & Same trend & Strong & Chemical field sets velocity memory. \\[4pt]
+OCF & Exponential decay with finite $\tau_r$ & Same trend & Strong & Same field affects direction memory. \\[4pt]
+Persistence times & Finite $\tau_p$ and $\tau_r$ & Similar values & Good & Trail lifetime explains the timescales. \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Strong agreement.}
+The main trends in the data are reproduced well by the model. These include superdiffusive MSD, smooth decay of the local exponent, exponential VACF and OCF, and finite persistence times. These are not simple features of random motion. They point to a specific mechanism in which the droplet is guided by a field that it created itself.
+
+\paragraph{Small differences.}
+The exact numerical values do not always match perfectly. This is expected because the experiment has limited trajectory lengths, tracking noise, and droplet-to-droplet variation. The model is also simplified, since it uses an effective chemical field rather than the full BZ chemistry.
+
+\paragraph{Implication.}
+Even with these limits, the agreement is strong enough to support the main idea of the thesis: the droplets move with memory, and this memory comes from the chemical trail.
+
+% ----------------------------------------------------------------
+\subsection{Implications for Memory-Driven Active Matter}
+\label{subsec:comp_implications}
+
+The combined evidence from the MSD, local exponent, VACF, OCF, and persistence times shows that the BZ droplets do not behave like simple Brownian particles. A Brownian particle has no memory of its past motion\cite{klafter2011,resnick1992}, so it would not show persistent correlations, superdiffusive spreading, or non-zero persistence times. The experimental droplets show all of these features.
+
+The simplest explanation is that each droplet leaves behind a chemical trail that changes the environment around it. This trail does not stay fixed forever. It spreads out and decays with time, so its influence becomes weaker. While it is still present, however, it pushes the droplet away from its own past path and helps keep its motion and direction correlated for a short time.
+
+This means that the droplet dynamics are non-Markovian\cite{schutz2004,balakrishnan2021}. In other words, the present motion depends on the past. The PDE--SDE model captures this idea in a simple way and reproduces the main experimental trends \cite{droplet2025}. For this reason, the model gives a good description of memory-driven active motion in BZ droplets.
+
+\paragraph{Summary.}
+Overall, the comparison between experiment and simulation supports the idea that a self-generated chemical field is the main reason for the observed persistent motion\cite{droplet2025}. The agreement across all observables shows that the droplet's path history is stored in the trail and then fed back into the motion. This is the key mechanism behind the non-Markovian behaviour observed in the system.

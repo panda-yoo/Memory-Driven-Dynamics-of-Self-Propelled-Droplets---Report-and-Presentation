@@ -1,0 +1,129 @@
+\section{Representative Experimental Droplet}
+
+To illustrate the analysis procedure at the level of an individual trajectory, a representative droplet was selected from Experiment~2.4. The chosen droplet remained visible throughout the observation period and provided a complete record of its dynamics. This section demonstrates the statistical quantities extracted from a single trajectory before considering ensemble averages.
+
+%=========================================================
+\subsection{Trajectory}
+%=========================================================
+
+Figure~\ref{fig:rep_traj} shows the trajectory of the representative droplet in the observation plane. Circular markers indicate the starting position of the droplet, while square markers indicate its final position at the end of the observation period.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{plots_single_droplet_trajectory_comparison.png}
+\caption{Trajectory of the representative droplet from Experiment~2.4.}
+\label{fig:rep_traj}
+\end{figure}
+
+The representative droplet explores a large region of the observation domain during the measurement period. The start and end points, indicated by circles and squares respectively, are clearly separated, demonstrating a significant net displacement over the observation time. The trajectory contains extended excursions and gradual changes in direction rather than remaining confined to a small region. Such behaviour is consistent with persistent self-propelled motion and suggests the presence of temporal correlations in the droplet dynamics.
+
+%=========================================================
+\subsection{Mean-Squared Displacement}
+%=========================================================
+
+Figure~\ref{fig:rep_msd} shows the mean-squared displacement of the representative droplet.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{plots_single_droplet_msd_comparison.png}
+\caption{Mean-squared displacement of the representative droplet.}
+\label{fig:rep_msd}
+\end{figure}
+
+The MSD exhibits an approximately power-law dependence over the fitted lag-time interval. The fitted transport exponent is
+
+\begin{table}[htbp]
+\centering
+\caption{MSD transport exponents for the retained droplets.}
+\begin{tabular}{cc}
+\hline
+Droplet & $\alpha$ \\
+\hline
+2 & $1.66274 \pm 0.00627$ \\
+4 & $1.73885 \pm 0.00356$ \\
+6 & $1.71450 \pm 0.00466$ \\
+\hline
+\end{tabular}
+\end{table}
+
+Since $\alpha>1$, the motion is superdiffusive\cite{balakrishnan2021} and therefore more persistent than ordinary diffusion.
+
+%=========================================================
+\subsection{Local MSD Exponent}
+%=========================================================
+
+Figure~\ref{fig:rep_alpha} shows the local MSD exponent as a function of lag time.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{plots_single_droplet_local_alpha_comparison.png}
+\caption{Local MSD exponent of the representative droplet.}
+\label{fig:rep_alpha}
+\end{figure}
+
+At short lag times, the exponent approaches the ballistic limit ($\alpha\approx2$)\cite{balakrishnan2021}, indicating strong directional persistence. As the lag time increases, the exponent decreases gradually, reflecting a crossover toward weaker temporal correlations.
+
+%=========================================================
+\subsection{Velocity Autocorrelation Function}
+%=========================================================
+
+Figure~\ref{fig:rep_vacf} shows the velocity autocorrelation function of the representative droplet.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{plots_single_droplet_vacf_comparison.png}
+\caption{Velocity autocorrelation function of the representative droplet.}
+\label{fig:rep_vacf}
+\end{figure}
+
+The VACF decays gradually with lag time and can be described approximately by an exponential decay \cite{balakrishnan2021}. The extracted persistence time is
+
+\begin{table}[htbp]
+\centering
+\caption{Velocity persistence times obtained from VACF fits.}
+\begin{tabular}{cc}
+\hline
+Droplet & $\tau_p$ (s) \\
+\hline
+2 & $24.38933 \pm 0.14766$ \\
+4 & $37.59556 \pm 0.34607$ \\
+6 & $28.72016 \pm 0.31792$ \\
+\hline
+\end{tabular}
+\end{table}
+
+The finite persistence time indicates that the droplet retains memory of its previous velocity over timescales substantially longer than the frame interval.
+
+%=========================================================
+\subsection{Orientation Correlation Function}
+%=========================================================
+
+Figure~\ref{fig:rep_orientation} shows the orientation correlation function of the representative droplet.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{plots_single_droplet_orientation_comparison.png}
+\caption{Orientation correlation function of the representative droplet.}
+\label{fig:rep_orientation}
+\end{figure}
+
+The orientation correlation decreases gradually with lag time \cite{balakrishnan2021}, indicating that the droplet maintains directional memory over finite timescales. An exponential fit yields the rotational persistence time
+
+\begin{table}[htbp]
+\centering
+\caption{Rotational persistence times obtained from orientation correlation fits.}
+\begin{tabular}{cc}
+\hline
+Droplet & $\tau_r$ (s) \\
+\hline
+2 & $34.73489 \pm 0.36682$ \\
+4 & $27.46487 \pm 0.36830$ \\
+6 & $35.41074 \pm 0.32275$ \\
+\hline
+\end{tabular}
+\end{table}
+
+The existence of a finite rotational persistence time demonstrates that reorientation occurs continuously rather than through completely random changes in direction.
+
+The representative trajectory analysis reveals superdiffusive transport, finite velocity persistence, and finite rotational persistence. These observations are consistent with the presence of memory effects and motivate the ensemble analysis presented in the following section\cite{balakrishnan2021}.
+\clearpage
