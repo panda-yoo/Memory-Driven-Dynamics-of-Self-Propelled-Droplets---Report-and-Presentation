@@ -1,3 +1,4 @@
 *.py
 used_images.txt
 *.ps1
+.vscode/*   
